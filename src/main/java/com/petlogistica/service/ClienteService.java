@@ -4,17 +4,24 @@ import com.petlogistica.exception.RecursoNaoEncontradoException;
 import com.petlogistica.model.Cliente;
 import com.petlogistica.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
+import com.petlogistica.model.Endereco;
+import com.petlogistica.repository.EnderecoRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
+    private final EnderecoRepository enderecoRepository;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(
+            ClienteRepository clienteRepository,
+            EnderecoRepository enderecoRepository) {
+
         this.clienteRepository = clienteRepository;
+        this.enderecoRepository = enderecoRepository;
     }
 
     public Cliente salvar(Cliente cliente) {
@@ -25,27 +32,53 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente buscarPorId(int id) {
+    public Cliente buscarPorId(Integer id) {
         return clienteRepository.findById(id)
                 .orElseThrow(()
-                        -> new RecursoNaoEncontradoException("Cliente não encontrado"));
+                        -> new RecursoNaoEncontradoException(
+                        "Cliente não encontrado"));
     }
 
-    public Optional<Cliente> atualizar(int id, Cliente cliente) {
+    public Cliente atualizar(Integer id, Cliente dados) {
 
-        return clienteRepository.findById(id)
-                .map(clienteExistente -> {
+        Cliente cliente = buscarPorId(id);
 
-                    clienteExistente.setNome(cliente.getNome());
-                    clienteExistente.setCpf(cliente.getCpf());
-                    clienteExistente.setEmail(cliente.getEmail());
-                    clienteExistente.setTelefone(cliente.getTelefone());
+        cliente.setNome(dados.getNome());
+        cliente.setCpf(dados.getCpf());
+        cliente.setEmail(dados.getEmail());
+        cliente.setTelefone(dados.getTelefone());
 
-                    return clienteRepository.save(clienteExistente);
-                });
+        return clienteRepository.save(cliente);
     }
 
-    public void excluir(int id) {
-        clienteRepository.deleteById(id);
+    @Transactional
+    public Cliente adicionarEndereco(Integer idCliente, Endereco endereco) {
+        Cliente cliente = buscarPorId(idCliente);
+
+        cliente.getEnderecos().add(endereco);
+
+        return clienteRepository.save(cliente);
+    }
+
+    @Transactional
+    public void removerEndereco(Integer idCliente, Integer idEndereco) {
+
+        Cliente cliente = buscarPorId(idCliente);
+
+        Endereco endereco = enderecoRepository.findById(idEndereco)
+                .orElseThrow(()
+                        -> new RecursoNaoEncontradoException("Endereço não encontrado"));
+
+        cliente.getEnderecos().remove(endereco);
+
+        clienteRepository.save(cliente);
+        enderecoRepository.delete(endereco);
+    }
+
+    public void excluir(Integer id) {
+
+        Cliente cliente = buscarPorId(id);
+
+        clienteRepository.delete(cliente);
     }
 }

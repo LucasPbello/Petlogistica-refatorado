@@ -1,9 +1,13 @@
 package com.petlogistica.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Cliente {
@@ -16,6 +20,9 @@ public class Cliente {
     private String cpf;
     private String email;
     private String telefone;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Endereco> enderecos = new ArrayList<>();
 
     public Cliente() {
     }
@@ -67,4 +74,13 @@ public class Cliente {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+
 }
