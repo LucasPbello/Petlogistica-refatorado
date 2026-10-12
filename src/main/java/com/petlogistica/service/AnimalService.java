@@ -66,7 +66,6 @@ public class AnimalService {
                     animalExistente.setCor(animal.getCor());
                     animalExistente.setPeso(animal.getPeso());
                     animalExistente.setTamanho(animal.getTamanho());
-                    animalExistente.setCaixaTransporte(animal.getCaixaTransporte());
                     animalExistente.setDataNascimento(animal.getDataNascimento());
 
                     if (animal.getCliente() != null

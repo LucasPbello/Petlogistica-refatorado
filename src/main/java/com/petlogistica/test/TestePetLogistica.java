@@ -86,7 +86,6 @@ public class TestePetLogistica {
         animal.setCor("Preto");
         animal.setPeso(10);
         animal.setTamanho(40);
-        animal.setCaixaTransporte(300);
 
         animal.setCliente(clienteAtualizado);
 

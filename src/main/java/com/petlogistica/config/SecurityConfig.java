@@ -1,0 +1,73 @@
+package com.petlogistica.config;
+
+import jakarta.servlet.ServletException;
+import java.io.IOException;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http) throws Exception {
+
+        http
+                .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                        "/",
+                        "/login",
+                        "/cadastro",
+                        "/css/**",
+                        "/js/**",
+                        "/imagens/**"
+                ).permitAll()
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/tutor/**").hasRole("TUTOR")
+                .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                .loginPage("/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .successHandler(this::redirecionarPorPerfil)
+                .permitAll()
+                )
+                .logout(logout -> logout
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+                );
+
+        return http.build();
+    }
+
+    private void redirecionarPorPerfil(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Authentication authentication)
+            throws IOException, ServletException {
+
+        boolean administrador = authentication.getAuthorities()
+                .stream()
+                .anyMatch(autoridade
+                        -> autoridade.getAuthority().equals("ROLE_ADMIN"));
+
+        if (administrador) {
+            response.sendRedirect("/admin");
+        } else {
+            response.sendRedirect("/tutor");
+        }
+    }
+}

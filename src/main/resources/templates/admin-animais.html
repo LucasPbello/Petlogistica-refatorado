@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PETCARGO - Gerenciar animais</title>
+        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    </head>
+    <body>
+        <main class="container">
+
+            <h1>Gerenciar animais</h1>
+            <p>Consulte e administre os animais cadastrados.</p>
+
+            <p th:if="${sucesso}" th:text="${sucesso}"></p>
+
+            <p>
+                <a th:href="@{/admin/animais/novo}">Cadastrar novo animal</a>
+            </p>
+
+            <p th:if="${animais.isEmpty()}">
+                Nenhum animal cadastrado.
+            </p>
+
+            <div th:if="${!animais.isEmpty()}">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Espécie</th>
+                            <th>Raça</th>
+                            <th>Sexo</th>
+                            <th>Tutor</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="animal : ${animais}">
+                            <td th:text="${animal.idAnimal}"></td>
+                            <td th:text="${animal.nome}"></td>
+                            <td th:text="${animal.especie}"></td>
+                            <td th:text="${animal.raca}"></td>
+                            <td th:text="${animal.sexo}"></td>
+                            <td th:text="${animal.cliente != null
+                                ? animal.cliente.nome : 'Sem tutor'}"></td>
+                            <td>
+                                <a th:href="@{/admin/animais/{id}/editar(
+                                   id=${animal.idAnimal})}">Editar</a>
+
+                                <form th:action="@{/admin/animais/{id}/excluir(
+                                      id=${animal.idAnimal})}"
+                                      method="post"
+                                      style="display:inline"
+                                      onsubmit="return confirm(
+                                          'Tem certeza de que deseja excluir este animal?');">
+
+                                    <button type="submit">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>
+                <a th:href="@{/admin}">Voltar ao painel administrativo</a>
+            </p>
+
+        </main>
+    </body>
+</html>

@@ -22,7 +22,6 @@ public class Animal {
     private String cor;
     private double peso;
     private double tamanho;
-    private int caixaTransporte;
     private LocalDate dataNascimento;
 
     @ManyToOne
@@ -32,8 +31,7 @@ public class Animal {
     }
 
     public Animal(Integer idAnimal, String nome, String especie, String raca,
-            String sexo, String cor, double peso, double tamanho,
-            int caixaTransporte, LocalDate dataNascimento) {
+            String sexo, String cor, double peso, double tamanho, LocalDate dataNascimento) {
         this.idAnimal = idAnimal;
         this.nome = nome;
         this.especie = especie;
@@ -42,7 +40,6 @@ public class Animal {
         this.cor = cor;
         this.peso = peso;
         this.tamanho = tamanho;
-        this.caixaTransporte = caixaTransporte;
         this.dataNascimento = dataNascimento;
     }
 
@@ -108,14 +105,6 @@ public class Animal {
 
     public void setTamanho(double tamanho) {
         this.tamanho = tamanho;
-    }
-
-    public int getCaixaTransporte() {
-        return caixaTransporte;
-    }
-
-    public void setCaixaTransporte(int caixaTransporte) {
-        this.caixaTransporte = caixaTransporte;
     }
 
     public LocalDate getDataNascimento() {

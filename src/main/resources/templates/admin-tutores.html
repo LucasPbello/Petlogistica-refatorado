@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutores cadastrados | PETCARGO</title>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+<body>
+    <header>
+        <h1>PETCARGO</h1>
+        <p>Gerenciamento de tutores</p>
+    </header>
+
+    <main>
+        <h2>Tutores cadastrados</h2>
+
+        <p th:if="${#lists.isEmpty(tutores)}">
+            Nenhum tutor cadastrado.
+        </p>
+
+        <table th:unless="${#lists.isEmpty(tutores)}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="tutor : ${tutores}">
+                    <td th:text="${tutor.idCliente}"></td>
+                    <td th:text="${tutor.nome}"></td>
+                    <td th:text="${tutor.email}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            <a th:href="@{/admin}">Voltar ao painel administrativo</a>
+        </p>
+    </main>
+</body>
+</html>

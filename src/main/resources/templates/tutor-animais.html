@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Meus animais | PETCARGO</title>
+        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    </head>
+    <body>
+        <header>
+            <h1>PETCARGO</h1>
+            <p>Meus animais</p>
+        </header>
+
+        <main>
+            <h2>Meus animais</h2>
+
+            <p th:if="${sucesso}" th:text="${sucesso}"></p>
+            <p th:if="${erro}" th:text="${erro}"></p>
+
+            <p th:if="${#lists.isEmpty(animais)}">
+                Você ainda não cadastrou nenhum animal.
+            </p>
+
+            <table th:unless="${#lists.isEmpty(animais)}">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Espécie</th>
+                        <th>Raça</th>
+                        <th>Sexo</th>
+                        <th>Peso (kg)</th>
+                        <th>Data de nascimento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="animal : ${animais}">
+                        <td th:text="${animal.nome}"></td>
+                        <td th:text="${animal.especie}"></td>
+                        <td th:text="${animal.raca}"></td>
+                        <td th:text="${animal.sexo}"></td>
+                        <td th:text="${animal.peso}"></td>
+                        <td th:text="${animal.dataNascimento}"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                <a th:href="@{/tutor/animais/novo}">
+                    Cadastrar animal
+                </a>
+            </p>
+
+            <p>
+                <a th:href="@{/tutor}">Voltar à área do tutor</a>
+            </p>
+        </main>
+    </body>
+</html>

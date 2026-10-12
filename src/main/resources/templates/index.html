@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>PETCARGO | PetLogística</title>
+
+        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+        <script th:src="@{/js/app.js}" defer></script>
+    </head>
+    <body>
+        <header class="cabecalho">
+            <a class="logo" th:href="@{/}">
+                <span class="logo-icone">🐾</span>
+                <span>PETCARGO</span>
+            </a>
+
+            <nav class="navegacao">
+                <a th:href="@{/}">Início</a>
+                <a th:href="@{/login}">Entrar</a>
+                <a th:href="@{/cadastro}" class="botao botao-pequeno">
+                    Criar conta
+                </a>
+
+                <button id="alternar-tema"
+                        class="botao-tema"
+                        type="button"
+                        aria-label="Alternar tema">
+                    🌙
+                </button>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="hero-conteudo">
+                    <span class="etiqueta">TRANSPORTE PET COM CUIDADO</span>
+
+                    <h1>Seu pet merece uma viagem tranquila.</h1>
+
+                    <p>
+                        Organize as informações do seu animal, mantenha
+                        seus documentos acessíveis e acompanhe os dados
+                        necessários para o transporte com praticidade.
+                    </p>
+
+                    <div class="hero-acoes">
+                        <a th:href="@{/cadastro}" class="botao">
+                            Começar agora
+                        </a>
+
+                        <a th:href="@{/login}" class="botao botao-secundario">
+                            Já tenho uma conta
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-visual" aria-label="Ilustração de um animal">
+                    <div class="circulo-decorativo"></div>
+                    <div class="pet-ilustracao">🐶</div>
+                    <div class="cartao-flutuante">
+                        <span>🐾</span>
+                        <div>
+                            <strong>Cuidado em cada etapa</strong>
+                            <p>Informações organizadas</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="recursos">
+                <div class="secao-titulo">
+                    <span class="etiqueta">PRATICIDADE E ORGANIZAÇÃO</span>
+                    <h2>Tudo para facilitar a rotina</h2>
+                    <p>Um espaço para organizar os dados do seu pet.</p>
+                </div>
+
+                <div class="recursos-grade">
+                    <article class="recurso-card">
+                        <div class="recurso-icone">🐕</div>
+                        <h3>Cadastro de animais</h3>
+                        <p>
+                            Organize nome, espécie, raça, peso,
+                            tamanho e outras informações do animal.
+                        </p>
+                    </article>
+
+                    <article class="recurso-card">
+                        <div class="recurso-icone">📄</div>
+                        <h3>Documentação</h3>
+                        <p>
+                            Prepare a estrutura para guardar e consultar
+                            documentos e imagens dos animais.
+                        </p>
+                    </article>
+
+                    <article class="recurso-card">
+                        <div class="recurso-icone">👤</div>
+                        <h3>Área do tutor</h3>
+                        <p>
+                            Tenha acesso organizado aos seus dados
+                            pessoais e aos animais vinculados à sua conta.
+                        </p>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <footer class="rodape">
+            <p>&copy; 2026 PETCARGO — PetLogística.</p>
+            <p>Cuidado e organização para quem faz parte da família.</p>
+        </footer>
+    </body>
+</html>
