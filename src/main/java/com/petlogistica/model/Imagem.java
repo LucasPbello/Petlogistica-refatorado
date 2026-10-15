@@ -1,5 +1,6 @@
 package com.petlogistica.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,11 +19,15 @@ public class Imagem {
     private String tipo;
     private String contentType;
 
+    @JsonIgnore
     @Lob
     private byte[] arquivo;
 
     @ManyToOne
     private Animal animal;
+
+    @ManyToOne
+    private Cliente cliente;
 
     public Imagem() {
     }
@@ -83,4 +88,13 @@ public class Imagem {
     public void setAnimal(Animal animal) {
         this.animal = animal;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
 }

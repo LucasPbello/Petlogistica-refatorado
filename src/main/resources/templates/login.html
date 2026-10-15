@@ -1,50 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | PETCARGO</title>
-    <link rel="stylesheet" th:href="@{/css/estilo.css}">
-    <script th:src="@{/js/app.js}" defer></script>
-</head>
-<body class="auth-page">
-    <main class="auth-card">
-        <h1>PETCARGO</h1>
-        <h2>Entrar na sua conta</h2>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login | PETCARGO</title>
+        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+        <script th:src="@{/js/app.js}" defer></script>
+    </head>
+    <body class="auth-page">
+        <main class="auth-card">
+            <h1>PETCARGO</h1>
+            <h2>Entrar na sua conta</h2>
 
-        <p th:if="${param.error}" class="mensagem erro">
-            E-mail ou senha inválidos.
-        </p>
+            <p th:if="${param.error}" class="mensagem erro">
+                E-mail ou senha inválidos.
+            </p>
 
-        <p th:if="${param.logout}" class="mensagem">
-            Você saiu da sua conta.
-        </p>
+            <p th:if="${param.logout}" class="mensagem">
+                Você saiu da sua conta.
+            </p>
 
-        <p th:if="${param.cadastro}" class="mensagem sucesso">
-            Cadastro realizado! Entre com seus dados.
-        </p>
+            <p th:if="${param.cadastro}" class="mensagem sucesso">
+                Cadastro realizado! Entre com seus dados.
+            </p>
 
-        <p th:if="${erro}" class="mensagem erro" th:text="${erro}"></p>
-        <p th:if="${sucesso}" class="mensagem sucesso" th:text="${sucesso}"></p>
+            <p th:if="${erro}" class="mensagem erro" th:text="${erro}"></p>
+            <p th:if="${sucesso}" class="mensagem sucesso" th:text="${sucesso}"></p>
 
-        <form th:action="@{/login}" method="post">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email"
-                   autocomplete="email" required>
 
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="password"
-                   autocomplete="current-password" required>
+            <form th:action="@{/login}" method="post">
 
-            <button type="submit">Entrar</button>
-        </form>
+                <label for="email">Nome de usuário ou e-mail</label>
+                <input type="text"
+                       id="email"
+                       name="email"
+                       placeholder="Digite seu usuário ou e-mail"
+                       autocomplete="username"
+                       required>
 
-        <p>
-            Ainda não tem conta?
-            <a th:href="@{/cadastro}">Cadastre-se</a>
-        </p>
-    </main>
-</body>
+                <label for="senha">Senha</label>
+                <input type="password"
+                       id="senha"
+                       name="password"
+                       autocomplete="current-password"
+                       required>
+
+                <button type="submit">Entrar</button>
+
+            </form>
+
+
+            <p>
+                Ainda não tem conta?
+                <a th:href="@{/cadastro}">Cadastre-se</a>
+            </p>
+        </main>
+    </body>
 </html>
 
 

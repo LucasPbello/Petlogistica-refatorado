@@ -3,69 +3,164 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PETCARGO - Animal</title>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+
+        <title>Cadastro de Pets | PETCARGO</title>
+
         <link rel="stylesheet" th:href="@{/css/estilo.css}">
     </head>
-    <body>
-        <main class="container">
 
-            <h1 th:text="${novo} ? 'Cadastrar animal' : 'Editar animal'">
-                Animal
-            </h1>
+    <body class="painel-page">
 
-            <form th:action="${novo} ? @{/admin/animais}
-                  : @{/admin/animais/{id}/editar(id=${animal.idAnimal})}"
-                  th:object="${animal}"
-                  method="post">
+        <header class="painel-cabecalho">
+            <div class="painel-cabecalho-conteudo">
 
-                <label for="nome">Nome</label>
-                <input id="nome" type="text" th:field="*{nome}" required>
+                <a class="painel-logo" th:href="@{/admin}">
+                    PETCARGO
+                </a>
 
-                <label for="especie">Espécie</label>
-                <input id="especie" type="text" th:field="*{especie}" required>
+                <a th:href="@{/admin/animais}">
+                    Voltar aos pets
+                </a>
 
-                <label for="raca">Raça</label>
-                <input id="raca" type="text" th:field="*{raca}">
+            </div>
+        </header>
 
-                <label for="sexo">Sexo</label>
-                <input id="sexo" type="text" th:field="*{sexo}" required>
+        <main class="painel-container">
 
-                <label for="cor">Cor</label>
-                <input id="cor" type="text" th:field="*{cor}">
+            <section class="painel-boas-vindas">
 
-                <label for="peso">Peso (kg)</label>
-                <input id="peso" type="number" th:field="*{peso}"
-                       min="0.01" step="any" required>
+                <p class="painel-etiqueta">
+                    ÁREA DO ADMINISTRADOR
+                </p>
 
-                <label for="tamanho">Tamanho (cm)</label>
-                <input id="tamanho" type="number" th:field="*{tamanho}"
-                       min="0.01" step="any" required>
+                <h1 th:text="${novo} ? 'Cadastrar pet' : 'Editar pet'">
+                    Pet
+                </h1>
 
-                <label for="dataNascimento">Data de nascimento</label>
-                <input id="dataNascimento" type="date"
-                       th:field="*{dataNascimento}">
+                <p th:if="${novo}">
+                    Preencha as informações para cadastrar
+                    um novo pet no sistema.
+                </p>
 
-                <div th:if="${novo}">
-                    <label for="idCliente">Tutor responsável</label>
-                    <select id="idCliente" name="idCliente">
-                        <option value="">Sem tutor associado</option>
-                        <option th:each="tutor : ${tutores}"
-                                th:value="${tutor.idCliente}"
-                                th:text="${tutor.nome + ' - ' + tutor.email}">
-                        </option>
-                    </select>
-                </div>
+                <p th:unless="${novo}">
+                    Atualize as informações do pet cadastrado.
+                </p>
 
-                <button type="submit"
-                        th:text="${novo} ? 'Cadastrar animal' : 'Salvar alterações'">
-                    Salvar
-                </button>
+            </section>
 
-                <a th:href="@{/admin/animais}">Cancelar</a>
-            </form>
+            <section class="animal-form-card">
+
+                <form th:action="${novo} ? @{/admin/animais}
+                      : @{/admin/animais/{id}/editar(id=${animal.idAnimal})}"
+                      th:object="${animal}"
+                      method="post">
+
+                    <label for="nome">Nome</label>
+                    <input id="nome"
+                           type="text"
+                           th:field="*{nome}"
+                           required>
+
+                    <label for="especie">Espécie</label>
+                    <input id="especie"
+                           type="text"
+                           th:field="*{especie}"
+                           required>
+
+                    <label for="raca">Raça</label>
+                    <input id="raca"
+                           type="text"
+                           th:field="*{raca}">
+
+                    <label for="sexo">Sexo</label>
+                    <input id="sexo"
+                           type="text"
+                           th:field="*{sexo}"
+                           required>
+
+                    <label for="cor">Cor</label>
+                    <input id="cor"
+                           type="text"
+                           th:field="*{cor}">
+
+                    <label for="peso">Peso (kg)</label>
+                    <input id="peso"
+                           type="number"
+                           th:field="*{peso}"
+                           min="0.01"
+                           step="any"
+                           required>
+
+                    <label for="tamanho">Tamanho (cm)</label>
+                    <input id="tamanho"
+                           type="number"
+                           th:field="*{tamanho}"
+                           min="0.01"
+                           step="any"
+                           required>
+
+                    <label for="dataNascimento">
+                        Data de nascimento
+                    </label>
+
+                    <input id="dataNascimento"
+                           type="date"
+                           th:field="*{dataNascimento}">
+
+                    <div th:if="${novo}">
+
+                        <label for="idCliente">
+                            Tutor responsável
+                        </label>
+
+                        <select id="idCliente" name="idCliente">
+
+                            <option value="">
+                                Sem tutor associado
+                            </option>
+
+                            <option th:each="tutor : ${tutores}"
+                                    th:value="${tutor.idCliente}"
+                                    th:text="${tutor.nome + ' - ' + tutor.email}">
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="animal-form-navegacao">
+
+                        <button type="submit" class="botao"
+                                th:text="${novo} ? 'Cadastrar pet' : 'Salvar alterações'">
+                            Salvar
+                        </button>
+
+                        <a class="botao botao-secundario"
+                           th:href="@{/admin/animais}">
+                            Cancelar
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+            <div class="animal-form-navegacao"
+                 th:if="${!novo and animal.cliente != null}">
+
+                <a class="botao botao-secundario"
+                   th:href="@{/admin/tutores/{id}/animais(id=${animal.cliente.idCliente})}">
+                    ← Voltar aos pets deste tutor
+                </a>
+
+            </div>
 
         </main>
+
     </body>
 </html>
+
 

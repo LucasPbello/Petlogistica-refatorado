@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Lob;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Documento {
@@ -17,11 +18,15 @@ public class Documento {
     private String nome;
     private String tipo;
 
+    @JsonIgnore
     @Lob
     private byte[] arquivo;
 
     @ManyToOne
     private Animal animal;
+
+    @ManyToOne
+    private Cliente cliente;
 
     public Documento() {
     }
@@ -72,6 +77,14 @@ public class Documento {
 
     public void setAnimal(Animal animal) {
         this.animal = animal;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
 }

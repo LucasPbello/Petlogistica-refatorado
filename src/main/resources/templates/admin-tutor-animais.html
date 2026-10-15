@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+
+        <title>Pets do tutor | PETCARGO</title>
+
+        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    </head>
+
+    <body class="painel-page">
+
+        <header class="painel-cabecalho">
+            <div class="painel-cabecalho-conteudo">
+                <a class="painel-logo" th:href="@{/admin}">
+                    PETCARGO
+                </a>
+
+                <a th:href="@{/admin}">
+                    Voltar ao painel
+                </a>
+            </div>
+        </header>
+
+        <main class="painel-container">
+
+            <section class="painel-boas-vindas">
+                <p class="painel-etiqueta">
+                    ÁREA DO ADMINISTRADOR
+                </p>
+
+                <h1>Pets do tutor</h1>
+
+                <p>
+                    Consulte os pets vinculados a este tutor
+                    e acesse suas informações.
+                </p>
+            </section>
+
+            <!-- Informações do tutor -->
+            <section class="admin-grupo-tutor">
+
+                <div class="admin-grupo-cabecalho">
+                    <div class="admin-grupo-informacoes">
+
+                        <span class="admin-grupo-etiqueta">
+                            TUTOR RESPONSÁVEL
+                        </span>
+
+                        <h2 class="admin-grupo-titulo"
+                            th:text="${tutor.nome}">
+                            Nome do tutor
+                        </h2>
+
+                        <p class="admin-grupo-cpf">
+                            <strong>E-mail:</strong>
+                            <span th:text="${tutor.email}">
+                                E-mail
+                            </span>
+                        </p>
+
+                        <p class="admin-grupo-cpf">
+                            <strong>CPF:</strong>
+                            <span th:text="${#strings.isEmpty(tutor.cpf)
+                                  ? 'Não informado' : tutor.cpf}">
+                                CPF
+                            </span>
+                        </p>
+                    </div>
+
+                    <span class="admin-grupo-quantidade"
+                          th:text="|${#lists.size(animais)} pets|">
+                        0 pets
+                    </span>
+                </div>
+
+                <!-- Mensagem quando não existem pets -->
+                <p th:if="${#lists.isEmpty(animais)}"
+                   class="admin-vazio">
+                    Este tutor ainda não possui pets cadastrados.
+                </p>
+
+                <!-- Cartões dos pets -->
+                <div class="admin-cards-grid"
+                     th:unless="${#lists.isEmpty(animais)}">
+
+                    <article class="admin-item-card animal-card"
+                             th:each="animal : ${animais}">
+
+                        <div class="admin-item-topo">
+                            <span class="admin-item-etiqueta">
+                                PET CADASTRADO
+                            </span>
+
+                            <span class="admin-item-id"
+                                  th:text="|ID ${animal.idAnimal}|">
+                                ID
+                            </span>
+                        </div>
+
+                        <h3 th:text="${animal.nome}">
+                            Nome do pet
+                        </h3>
+
+                        <div class="admin-item-dados">
+
+                            <p>
+                                <strong>Espécie:</strong>
+                                <span th:text="${animal.especie}">
+                                    Espécie
+                                </span>
+                            </p>
+
+                            <p>
+                                <strong>Raça:</strong>
+                                <span th:text="${#strings.isEmpty(animal.raca)
+                                      ? 'Não informada' : animal.raca}">
+                                    Raça
+                                </span>
+                            </p>
+
+                            <p>
+                                <strong>Sexo:</strong>
+                                <span th:text="${animal.sexo}">
+                                    Sexo
+                                </span>
+                            </p>
+
+                            <p>
+                                <strong>Cor:</strong>
+                                <span th:text="${#strings.isEmpty(animal.cor)
+                                      ? 'Não informada' : animal.cor}">
+                                    Cor
+                                </span>
+                            </p>
+
+                        </div>
+
+                        <div class="admin-item-acoes">
+
+                            <a class="botao botao-pequeno"
+                               th:href="@{/admin/animais/{id}/editar(
+                               id=${animal.idAnimal})}">
+                                Editar pet
+                            </a>
+
+                            <a class="botao botao-pequeno"
+                               th:href="@{/admin/animais/{id}/arquivos(
+                               id=${animal.idAnimal})}">
+                                Documentos e fotos
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+            <!-- Navegação -->
+            <div class="animal-form-navegacao">
+
+                <a class="botao botao-secundario"
+                   th:href="@{/admin/tutores}">
+                    ← Voltar aos tutores
+                </a>
+
+                <a class="botao botao-secundario"
+                   th:href="@{/admin/animais}">
+                    Ver todos os pets
+                </a>
+
+            </div>
+
+        </main>
+
+    </body>
+</html>
+

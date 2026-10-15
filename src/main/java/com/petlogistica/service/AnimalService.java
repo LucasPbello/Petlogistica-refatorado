@@ -6,7 +6,9 @@ import com.petlogistica.repository.AnimalRepository;
 import com.petlogistica.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 import com.petlogistica.exception.RecursoNaoEncontradoException;
-
+import com.petlogistica.repository.DocumentoRepository;
+import com.petlogistica.repository.ImagemRepository;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,11 +17,19 @@ public class AnimalService {
 
     private final AnimalRepository animalRepository;
     private final ClienteRepository clienteRepository;
+    private final DocumentoRepository documentoRepository;
+    private final ImagemRepository imagemRepository;
 
-    public AnimalService(AnimalRepository animalRepository,
-            ClienteRepository clienteRepository) {
+    public AnimalService(
+            AnimalRepository animalRepository,
+            ClienteRepository clienteRepository,
+            DocumentoRepository documentoRepository,
+            ImagemRepository imagemRepository) {
+
         this.animalRepository = animalRepository;
         this.clienteRepository = clienteRepository;
+        this.documentoRepository = documentoRepository;
+        this.imagemRepository = imagemRepository;
     }
 
     public Animal salvar(Animal animal) {
@@ -46,6 +56,10 @@ public class AnimalService {
 
     public List<Animal> listarTodos() {
         return animalRepository.findAll();
+    }
+
+    public List<Animal> listarPorCliente(Integer idCliente) {
+        return animalRepository.findByCliente_IdCliente(idCliente);
     }
 
     public Animal buscarPorId(int id) {
@@ -82,7 +96,29 @@ public class AnimalService {
                 });
     }
 
+    @Transactional
     public void excluir(int id) {
-        animalRepository.deleteById(id);
+
+        // Verifica se o pet existe.
+        Animal animal = buscarPorId(id);
+
+        // Localiza os documentos associados ao pet.
+        var documentos = documentoRepository
+                .findByAnimal_IdAnimal(id);
+
+        // Localiza as fotos associadas ao pet.
+        var imagens = imagemRepository
+                .findByAnimal_IdAnimal(id);
+
+        // Remove os arquivos relacionados.
+        documentoRepository.deleteAll(documentos);
+        imagemRepository.deleteAll(imagens);
+
+        // Executa as exclusões antes de remover o pet.
+        documentoRepository.flush();
+        imagemRepository.flush();
+
+        // Remove o pet.
+        animalRepository.delete(animal);
     }
 }

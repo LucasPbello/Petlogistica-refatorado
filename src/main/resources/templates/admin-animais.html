@@ -3,72 +3,283 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>PETCARGO - Gerenciar animais</title>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+
+        <title>Gerenciar Pets | PETCARGO</title>
+
         <link rel="stylesheet" th:href="@{/css/estilo.css}">
     </head>
-    <body>
-        <main class="container">
 
-            <h1>Gerenciar animais</h1>
-            <p>Consulte e administre os animais cadastrados.</p>
+    <body class="painel-page">
 
-            <p th:if="${sucesso}" th:text="${sucesso}"></p>
-
-            <p>
-                <a th:href="@{/admin/animais/novo}">Cadastrar novo animal</a>
-            </p>
-
-            <p th:if="${animais.isEmpty()}">
-                Nenhum animal cadastrado.
-            </p>
-
-            <div th:if="${!animais.isEmpty()}">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Espécie</th>
-                            <th>Raça</th>
-                            <th>Sexo</th>
-                            <th>Tutor</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr th:each="animal : ${animais}">
-                            <td th:text="${animal.idAnimal}"></td>
-                            <td th:text="${animal.nome}"></td>
-                            <td th:text="${animal.especie}"></td>
-                            <td th:text="${animal.raca}"></td>
-                            <td th:text="${animal.sexo}"></td>
-                            <td th:text="${animal.cliente != null
-                                ? animal.cliente.nome : 'Sem tutor'}"></td>
-                            <td>
-                                <a th:href="@{/admin/animais/{id}/editar(
-                                   id=${animal.idAnimal})}">Editar</a>
-
-                                <form th:action="@{/admin/animais/{id}/excluir(
-                                      id=${animal.idAnimal})}"
-                                      method="post"
-                                      style="display:inline"
-                                      onsubmit="return confirm(
-                                          'Tem certeza de que deseja excluir este animal?');">
-
-                                    <button type="submit">Excluir</button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+        <header class="painel-cabecalho">
+            <div class="painel-cabecalho-conteudo">
+                <a class="painel-logo" th:href="@{/admin}">
+                    PETCARGO
+                </a>
+                <a th:href="@{/admin}">Voltar ao painel</a>
             </div>
+        </header>
 
-            <p>
-                <a th:href="@{/admin}">Voltar ao painel administrativo</a>
-            </p>
+        <main class="painel-container">
 
+            <section class="painel-boas-vindas">
+                <p class="painel-etiqueta">ÁREA DO ADMINISTRADOR</p>
+
+                <h1>Gerenciar Pets</h1>
+
+                <p>
+                    Pets organizados por tutor, com acesso rápido
+                    à edição e aos arquivos.
+                </p>
+
+                <a class="botao" th:href="@{/admin/animais/novo}">
+                    + Cadastrar pet
+                </a>
+            </section>
+
+            <p th:if="${sucesso}" th:text="${sucesso}"
+               class="mensagem-sucesso"></p>
+
+            <p th:if="${erro}" th:text="${erro}"
+               class="mensagem-erro"></p>
+
+            <section class="admin-listagem">
+
+                <div class="admin-listagem-topo">
+                    <div>
+                        <h2>Pets cadastrados</h2>
+                        <p>
+                            Pesquise pelo pet, pelo tutor ou
+                            pelo CPF do tutor.
+                        </p>
+                    </div>
+
+                    <label class="admin-busca-label" for="buscaPet">
+                        <span>Pesquisar pets</span>
+                        <input id="buscaPet"
+                               type="search"
+                               placeholder="Pet, tutor ou CPF"
+                               autocomplete="off">
+                    </label>
+                </div>
+
+                <!-- Cartões criados pelo Thymeleaf -->
+                <div id="dadosPets" hidden>
+
+                    <article class="admin-item-card animal-card"
+                             th:each="animal : ${animais}"
+                             th:attr="data-pet=${animal.nome},
+                             data-tutor-id=${animal.cliente != null
+                             ? animal.cliente.idCliente : ''},
+                             data-tutor=${animal.cliente != null
+                             ? animal.cliente.nome : 'Sem tutor'},
+                             data-cpf=${animal.cliente != null
+                             ? animal.cliente.cpf : ''}">
+
+                        <div class="admin-item-topo">
+                            <span class="admin-item-etiqueta">
+                                PET CADASTRADO
+                            </span>
+
+                            <span class="admin-item-id"
+                                  th:text="|ID ${animal.idAnimal}|">
+                                ID
+                            </span>
+                        </div>
+
+                        <h3 th:text="${animal.nome}">Nome do pet</h3>
+
+                        <div class="admin-item-dados">
+
+                            <p>
+                                <strong>Espécie:</strong>
+                                <span th:text="${animal.especie}">
+                                    Espécie
+                                </span>
+                            </p>
+
+                            <p>
+                                <strong>Raça:</strong>
+                                <span th:text="${#strings.isEmpty(animal.raca)
+                                      ? 'Não informada' : animal.raca}">
+                                    Raça
+                                </span>
+                            </p>
+
+                            <p>
+                                <strong>Sexo:</strong>
+                                <span th:text="${animal.sexo}">
+                                    Sexo
+                                </span>
+                            </p>
+
+                            <p>
+                                <strong>Tutor:</strong>
+                                <span th:text="${animal.cliente != null
+                                      ? animal.cliente.nome : 'Sem tutor'}">
+                                    Tutor
+                                </span>
+                            </p>
+
+                        </div>
+
+                        <div class="admin-item-acoes">
+
+                            <a class="botao botao-pequeno"
+                               th:href="@{/admin/animais/{id}/editar(
+                               id=${animal.idAnimal})}">
+                                Editar
+                            </a>
+
+                            <a class="botao botao-pequeno"
+                               th:href="@{/admin/animais/{id}/arquivos(
+                               id=${animal.idAnimal})}">
+                                Documentos e fotos
+                            </a>
+
+                            <form method="post"
+                                  th:action="@{/admin/animais/{id}/excluir(
+                                  id=${animal.idAnimal})}"
+                                  onsubmit="return confirm('Excluir este pet e seus anexos?');">
+
+                                <button type="submit" class="acao-excluir">
+                                    Excluir
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+                <!-- Grupos organizados por tutor -->
+                <div id="gruposPets" class="admin-grupos"></div>
+
+                <p id="semPets" class="admin-vazio" hidden>
+                    Nenhum pet encontrado para esta pesquisa.
+                </p>
+
+                <p th:if="${#lists.isEmpty(animais)}" class="admin-vazio">
+                    Nenhum pet cadastrado.
+                </p>
+
+            </section>
         </main>
+
+        <script>
+            (() => {
+                const busca = document.getElementById('buscaPet');
+                const origem = document.getElementById('dadosPets');
+                const destino = document.getElementById('gruposPets');
+                const vazio = document.getElementById('semPets');
+
+                const cards = [
+                    ...origem.querySelectorAll('.admin-item-card')
+                ];
+
+                const normalizar = valor =>
+                    (valor || '')
+                            .normalize('NFD')
+                            .replace(/[\u0300-\u036f]/g, '')
+                            .toLowerCase()
+                            .trim();
+
+                const digitos = valor =>
+                    (valor || '').replace(/\D/g, '');
+
+                const grupos = new Map();
+
+                cards.forEach(card => {
+                    const id = card.dataset.tutorId;
+
+                    const chave = id
+                            ? `tutor-${id}`
+                            : 'sem-tutor';
+
+                    if (!grupos.has(chave)) {
+                        const secao = document.createElement('section');
+                        secao.className = 'admin-grupo-tutor';
+
+                        const titulo = document.createElement('h3');
+                        titulo.className = 'admin-grupo-titulo';
+
+                        titulo.textContent = id
+                                ? `Tutor: ${card.dataset.tutor}`
+                                : 'Pets sem tutor';
+
+                        const grade = document.createElement('div');
+                        grade.className = 'admin-cards-grid';
+
+                        secao.append(titulo, grade);
+
+                        grupos.set(chave, {
+                            secao,
+                            grade,
+                            cards: []
+                        });
+                    }
+
+                    const grupo = grupos.get(chave);
+
+                    grupo.grade.appendChild(card);
+                    grupo.cards.push(card);
+                });
+
+                [...grupos.values()]
+                        .sort((a, b) =>
+                            a.secao.querySelector('h3').textContent
+                                    .localeCompare(
+                                            b.secao.querySelector('h3').textContent,
+                                            'pt-BR'
+                                            )
+                        )
+                        .forEach(grupo =>
+                            destino.appendChild(grupo.secao)
+                        );
+
+                const filtrar = () => {
+                    const termo = normalizar(busca.value);
+                    const cpfBusca = digitos(busca.value);
+
+                    let encontrados = 0;
+
+                    grupos.forEach(grupo => {
+                        let visiveis = 0;
+
+                        grupo.cards.forEach(card => {
+                            const corresponde =
+                                    !termo ||
+                                    normalizar(card.dataset.pet).includes(termo) ||
+                                    normalizar(card.dataset.tutor).includes(termo) ||
+                                    (
+                                            cpfBusca.length > 0 &&
+                                            digitos(card.dataset.cpf).includes(cpfBusca)
+                                            );
+
+                            card.hidden = !corresponde;
+
+                            if (corresponde) {
+                                visiveis++;
+                                encontrados++;
+                            }
+                        });
+
+                        grupo.secao.hidden = visiveis === 0;
+                    });
+
+                    vazio.hidden =
+                            encontrados !== 0 || cards.length === 0;
+                };
+
+                busca.addEventListener('input', filtrar);
+                filtrar();
+            })();
+        </script>
+
     </body>
 </html>
+
+

@@ -1,4 +1,3 @@
-
 :root {
     color-scheme: light;
     --fundo: #f7f8fc;
@@ -550,6 +549,7 @@ h1 {
     }
 }
 
+/* Acessibilidade: respeita a preferência por menos animações. */
 @media (prefers-reduced-motion: reduce) {
     .auth-card {
         animation: none;
@@ -561,6 +561,1470 @@ h1 {
         transition: none;
     }
 }
+
+/* ========================================
+   PETCARGO — componentes administrativos
+   Estes estilos ficam limitados às telas que usam .container,
+   preservando o visual original da página inicial e da autenticação.
+   ======================================== */
+
+.container {
+    width: min(1180px, calc(100% - 40px));
+    margin: 36px auto;
+    color: var(--texto);
+}
+
+.container h1 {
+    margin: 0 0 12px;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+}
+
+.container h2 {
+    margin: 24px 0 12px;
+    font-size: 1.35rem;
+}
+
+.container > p {
+    color: var(--texto-secundario);
+}
+
+.container .btn-voltar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 22px;
+    padding: 9px 14px;
+    color: var(--primaria);
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.container .btn-voltar:hover {
+    background: var(--destaque);
+}
+
+.container .tabela-container {
+    width: 100%;
+    overflow-x: auto;
+    margin: 20px 0;
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+    box-shadow: var(--sombra);
+}
+
+.container table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--superficie);
+}
+
+.container thead {
+    background: var(--destaque);
+}
+
+.container th {
+    padding: 15px 16px;
+    color: var(--texto);
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--borda);
+}
+
+.container td {
+    padding: 14px 16px;
+    color: var(--texto);
+    border-bottom: 1px solid var(--borda);
+    vertical-align: middle;
+}
+
+.container tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.container tbody tr:hover {
+    background: color-mix(in srgb, var(--destaque) 35%, var(--superficie));
+}
+
+.container .acoes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.container .btn,
+.container button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 38px;
+    padding: 9px 14px;
+    border: 1px solid var(--primaria);
+    border-radius: 8px;
+    background: var(--primaria);
+    color: #fff;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.container .btn:hover,
+.container button:hover {
+    background: var(--primaria-hover);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.container .btn-editar {
+    background: var(--primaria);
+    border-color: var(--primaria);
+    color: #fff;
+}
+
+.container .btn-animais {
+    background: #2b6cb0;
+    border-color: #2b6cb0;
+    color: #fff;
+}
+
+.container .btn-animais:hover {
+    background: #245a91;
+    border-color: #245a91;
+}
+
+.container .btn-excluir {
+    background: #fff0ef;
+    border-color: #f2cfcc;
+    color: #a12622;
+}
+
+.container .btn-excluir:hover {
+    background: #a12622;
+    border-color: #a12622;
+    color: #fff;
+}
+
+.container form:not(.form-inline) {
+    max-width: 680px;
+}
+
+.container form label {
+    display: block;
+    margin: 15px 0 6px;
+    color: var(--texto);
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.container form input,
+.container form select,
+.container form textarea {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    color: var(--texto);
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    font: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.container form input:focus,
+.container form select:focus,
+.container form textarea:focus {
+    outline: none;
+    border-color: var(--primaria);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primaria) 18%, transparent);
+}
+
+.container form button {
+    margin-top: 20px;
+}
+
+.container .mensagem-sucesso,
+.container .mensagem-erro {
+    margin: 16px 0;
+    padding: 12px 15px;
+    border-radius: 9px;
+}
+
+.container .mensagem-sucesso {
+    color: #176344;
+    background: #edf9f1;
+    border: 1px solid #c5e9d0;
+}
+
+.container .mensagem-erro {
+    color: #a12b35;
+    background: #fff0f0;
+    border: 1px solid #f4cccc;
+}
+
+@media (max-width: 700px) {
+    .container {
+        width: calc(100% - 24px);
+        margin: 24px auto;
+    }
+
+    .container .tabela-container {
+        overflow-x: auto;
+    }
+
+    .container th,
+    .container td {
+        padding: 11px 12px;
+    }
+
+    .container .acoes {
+        min-width: 150px;
+    }
+
+}
+
+
+/* ========================================
+   PAINEL DO TUTOR - PETCARGO
+======================================== */
+
+.painel-page {
+    min-height: 100vh;
+    background: var(--fundo);
+    color: var(--texto);
+}
+
+.painel-cabecalho {
+    background: var(--superficie);
+    border-bottom: 1px solid var(--borda);
+    padding: 20px 5%;
+}
+
+.painel-cabecalho-conteudo {
+    max-width: 1150px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.painel-cabecalho form {
+    margin: 0;
+}
+
+.painel-logo {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--primaria);
+    text-decoration: none;
+}
+
+.painel-container {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 55px 24px;
+}
+
+.painel-boas-vindas {
+    margin-bottom: 40px;
+}
+
+.painel-etiqueta {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--primaria);
+    margin-bottom: 15px;
+}
+
+.painel-boas-vindas h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    margin-bottom: 15px;
+}
+
+.painel-boas-vindas p {
+    color: var(--texto-secundario);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.painel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.painel-card {
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 18px;
+    padding: 32px;
+    box-shadow: var(--sombra);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.painel-card-icone {
+    font-size: 34px;
+    margin-bottom: 20px;
+}
+
+.painel-card h2 {
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.painel-card p {
+    color: var(--texto-secundario);
+    line-height: 1.7;
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+.painel-card .botao {
+    text-decoration: none;
+}
+
+@media (max-width: 700px) {
+    .painel-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .painel-container {
+        padding: 35px 18px;
+    }
+
+    .painel-card {
+        padding: 24px;
+    }
+}
+
+
+/* Documentos pessoais do tutor */
+
+.arquivos-secao {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #dce5df;
+}
+
+.arquivos-secao h2 {
+    color: #276749;
+    margin-bottom: 12px;
+}
+
+.arquivos-secao h3 {
+    margin-top: 28px;
+    margin-bottom: 16px;
+}
+
+.arquivos-secao form {
+    margin-top: 16px;
+}
+
+.arquivos-secao select,
+.arquivos-secao input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5d1;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    background: #fff;
+    color: #243b30;
+}
+
+.arquivo-item {
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid #dce5df;
+    border-radius: 10px;
+}
+
+.arquivo-item strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.arquivo-item p {
+    margin: 4px 0 12px;
+}
+
+.arquivo-item form {
+    margin-top: 12px;
+}
+
+.botao-excluir {
+    padding: 9px 16px;
+    background: #b42318;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.botao-excluir:hover {
+    background: #912018;
+}
+
+/* Fotos pessoais do tutor */
+
+.fotos-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill, minmax(180px, 1fr)
+        );
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.foto-item {
+    padding: 14px;
+    border: 1px solid #dce5df;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.foto-item img {
+    display: block;
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.foto-item strong {
+    display: block;
+    color: #276749;
+    margin-bottom: 6px;
+}
+
+.foto-item p {
+    margin: 4px 0 10px;
+    color: #52635a;
+}
+
+.foto-item form {
+    margin-top: 12px;
+}
+
+@media (max-width: 480px) {
+    .fotos-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Gerenciamento dos animais do tutor */
+
+.animais-acoes {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 24px 0;
+}
+
+.animais-listagem {
+    margin-top: 28px;
+}
+
+.tabela-responsiva {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 12px;
+}
+
+.tabela-animais {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--cor-card, #fff);
+}
+
+.tabela-animais th,
+.tabela-animais td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #dce5df;
+}
+
+.tabela-animais th {
+    font-weight: 600;
+}
+
+.acoes-animal {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.acoes-animal form {
+    margin: 0;
+}
+
+.acao-editar,
+.acao-arquivos,
+.acao-excluir {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 7px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.acao-editar {
+    background: #e4f2e9;
+    color: #276749;
+}
+
+.acao-arquivos {
+    background: #e8efff;
+    color: #244c91;
+}
+
+.acao-excluir {
+    background: #fee4e2;
+    color: #b42318;
+    border: none;
+    cursor: pointer;
+}
+
+.mensagem-sucesso {
+    color: #276749;
+    font-weight: 600;
+}
+
+.mensagem-erro {
+    color: #b42318;
+    font-weight: 600;
+}
+
+
+/* Formulário de cadastro e edição de animais */
+
+.animal-form-card {
+    max-width: 780px;
+    margin: 28px auto;
+    padding: 32px;
+    border-radius: 16px;
+    background: var(--cor-card, #ffffff);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+}
+
+.animal-form-card h2 {
+    margin-bottom: 18px;
+}
+
+.animal-form-card label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.animal-form-card input,
+.animal-form-card select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5d1;
+    border-radius: 8px;
+    font: inherit;
+}
+
+.animal-form-card hr {
+    border: 0;
+    border-top: 1px solid #dce5df;
+    margin: 30px 0;
+}
+
+.animal-form-acoes {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+    .animal-form-card {
+        padding: 20px;
+    }
+}
+
+
+/* Arquivos dos animais */
+
+.animal-arquivo-item {
+    padding: 20px;
+    margin: 16px 0;
+    border: 1px solid #dce5df;
+    border-radius: 12px;
+}
+
+.animal-arquivo-item form {
+    margin-top: 16px;
+}
+
+.animal-arquivo-item label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.animal-arquivo-item input[type="file"] {
+    display: block;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.animal-fotos-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit, minmax(240px, 1fr)
+        );
+    gap: 20px;
+}
+
+.animal-foto {
+    display: block;
+    width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    margin: 16px 0;
+    border-radius: 10px;
+}
+
+.animal-arquivo-item .acao-excluir {
+    margin-top: 8px;
+}
+
+/* Ajustes visuais das telas de animais */
+.painel-page .painel-boas-vindas h1 {
+    font-size:clamp(2rem,3.4vw,2.8rem);
+    letter-spacing:-.6px
+}
+.painel-page .animais-listagem {
+    background:var(--superficie);
+    border:1px solid var(--borda);
+    border-radius:18px;
+    padding:26px;
+    box-shadow:var(--sombra)
+}
+.painel-page .animais-listagem h2 {
+    margin:0 0 20px;
+    font-size:1.4rem
+}
+.painel-page .tabela-responsiva {
+    border:1px solid var(--borda)
+}
+.painel-page .tabela-animais {
+    background:var(--superficie)
+}
+.painel-page .tabela-animais thead {
+    background:var(--destaque)
+}
+.painel-page .tabela-animais th,.painel-page .tabela-animais td {
+    padding:15px 18px;
+    border-bottom:1px solid var(--borda);
+    vertical-align:middle
+}
+.painel-page .tabela-animais tbody tr:last-child td {
+    border-bottom:0
+}
+.painel-page .tabela-animais tbody tr:hover {
+    background:var(--destaque)
+}
+.painel-page .animal-form-card {
+    background:var(--superficie);
+    border:1px solid var(--borda);
+    box-shadow:var(--sombra)
+}
+.painel-page .animal-form-card input,.painel-page .animal-form-card select {
+    background:var(--superficie);
+    color:var(--texto);
+    border-color:var(--borda);
+    min-height:44px
+}
+.painel-page .animal-form-card input:focus,.painel-page .animal-form-card select:focus {
+    outline:2px solid var(--primaria);
+    outline-offset:1px
+}
+.painel-page .animal-arquivo-item {
+    background:var(--superficie);
+    border-color:var(--borda)
+}
+.painel-page .animal-arquivo-item a:not(.botao) {
+    color:var(--primaria);
+    font-weight:700
+}
+.painel-page .acao-excluir {
+    font:inherit;
+    font-size:.9rem
+}
+.painel-page .acao-editar,.painel-page .acao-arquivos {
+    font-weight:700
+}
+.painel-page .mensagem-sucesso,.painel-page .mensagem-erro {
+    padding:12px 16px;
+    border-radius:9px;
+    margin:16px 0
+}
+.painel-page .mensagem-sucesso {
+    background:#e4f2e9;
+    color:#276749
+}
+.painel-page .mensagem-erro {
+    background:#fee4e2;
+    color:#b42318
+}
+@media (max-width:700px) {
+    .painel-page .animais-listagem {
+        padding:16px
+    }
+    .painel-page .tabela-animais th,.painel-page .tabela-animais td {
+        padding:12px
+    }
+    .painel-page .animal-form-card {
+        padding:20px
+    }
+
+}
+    /* ========================================
+       PETCARGO - CARTÕES DOS ANIMAIS
+       ======================================== */
+
+    .animais-grid {
+        display: grid;
+        grid-template-columns:
+            repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+        gap: 22px;
+        margin-top: 24px;
+    }
+
+    .animal-card {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 26px;
+        background: var(--superficie);
+        border: 1px solid var(--borda);
+        border-radius: 18px;
+        box-shadow: var(--sombra);
+    }
+
+    .animal-card-topo {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    .animal-card-etiqueta {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: var(--primaria);
+    }
+
+    .animal-card h3 {
+        margin: 8px 0 4px;
+        font-size: 1.5rem;
+        color: var(--texto);
+    }
+
+    .animal-card-topo p {
+        margin: 0;
+        color: var(--texto-secundario);
+    }
+
+    .animal-card-icone {
+        display: grid;
+        place-items: center;
+        width: 50px;
+        height: 50px;
+        flex-shrink: 0;
+        border-radius: 14px;
+        background: var(--destaque);
+        font-size: 25px;
+    }
+
+    .animal-card-dados {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 18px;
+        border-radius: 12px;
+        background: var(--fundo);
+    }
+
+    .animal-card-dados p {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .animal-card-dados strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--texto-secundario);
+        font-size: 0.8rem;
+    }
+
+    .animal-card-acoes {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-top: auto;
+    }
+
+    .animal-card-acoes form {
+        margin: 0;
+    }
+
+    .animal-card-acoes a,
+    .animal-card-acoes button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 9px 14px;
+        border-radius: 8px;
+        font: inherit;
+        font-size: 0.88rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .animal-card-acoes .acao-excluir {
+        border: 1px solid #f2cfcc;
+    }
+
+    @media (max-width: 480px) {
+        .animal-card {
+            padding: 20px;
+        }
+
+        .animal-card-dados {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Navegação do formulário dos pets */
+
+    .animal-form-navegacao {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .animal-form-navegacao .botao {
+        min-height: 44px;
+    }
+
+    /* ========================================
+       PETCARGO - PAINEL ADMINISTRATIVO
+       ======================================== */
+
+    .admin-rodape {
+        margin-top: 55px;
+        padding: 22px 0;
+        border-top: 1px solid var(--borda);
+        text-align: center;
+    }
+
+    .admin-rodape p {
+        margin: 0;
+        color: var(--texto-secundario);
+        font-size: 0.88rem;
+    }
+
+    .painel-page .painel-cabecalho form {
+        margin: 0;
+    }
+
+    .painel-page .painel-card {
+        transition: transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .painel-page .painel-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--sombra);
+    }
+
+    .painel-page .painel-card .botao {
+        margin-top: auto;
+    }
+
+    /* ========================================
+       PETCARGO - CARTÕES DOS TUTORES
+       ======================================== */
+
+    .tutores-grid {
+        display: grid;
+        grid-template-columns:
+            repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+        gap: 22px;
+        margin-top: 24px;
+    }
+
+    .tutor-card {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 26px;
+        background: var(--superficie);
+        border: 1px solid var(--borda);
+        border-radius: 18px;
+        box-shadow: var(--sombra);
+    }
+
+    .tutor-card-topo {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    .tutor-card-etiqueta {
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: var(--primaria);
+    }
+
+    .tutor-card h3 {
+        margin: 8px 0 4px;
+        font-size: 1.4rem;
+        overflow-wrap: anywhere;
+    }
+
+    .tutor-card-topo p {
+        margin: 0;
+        color: var(--texto-secundario);
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
+    }
+
+    .tutor-card-icone {
+        display: grid;
+        place-items: center;
+        width: 50px;
+        height: 50px;
+        flex-shrink: 0;
+        border-radius: 14px;
+        background: var(--destaque);
+        font-size: 25px;
+    }
+
+    .tutor-card-dados {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 18px;
+        border-radius: 12px;
+        background: var(--fundo);
+    }
+
+    .tutor-card-dados p {
+        margin: 0;
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
+    }
+
+    .tutor-card-dados strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--texto-secundario);
+        font-size: 0.8rem;
+    }
+
+    .tutor-card-acoes {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-top: auto;
+    }
+
+    .tutor-card-acoes form {
+        margin: 0;
+    }
+
+    .tutor-card-acoes a,
+    .tutor-card-acoes button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 9px 14px;
+        border-radius: 8px;
+        font: inherit;
+        font-size: 0.88rem;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .tutor-card-acoes .acao-excluir {
+        border: 1px solid #f2cfcc;
+    }
+
+    @media (max-width: 480px) {
+        .tutor-card {
+            padding: 20px;
+        }
+
+        .tutor-card-dados {
+            grid-template-columns: 1fr;
+        }
+    }
+
+
+    /* ========================================
+       PETCARGO - FORMULÁRIO ADMIN TUTOR
+       ======================================== */
+
+    .admin-tutor-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .admin-tutor-campo {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .admin-tutor-campo label {
+        font-weight: 700;
+        color: var(--texto);
+    }
+
+    .admin-tutor-campo input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 14px;
+        border: 1px solid var(--borda);
+        border-radius: 10px;
+        background: var(--superficie);
+        color: var(--texto);
+        font: inherit;
+    }
+
+    .admin-tutor-campo input:focus {
+        outline: 2px solid var(--primaria);
+        outline-offset: 2px;
+    }
+
+    .admin-tutor-form-grid + .animal-form-acoes {
+        margin-top: 28px;
+    }
+
+    @media (max-width: 650px) {
+        .admin-tutor-form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* ==========================================
+       PETCARGO - LISTAGENS ADMINISTRATIVAS
+       ========================================== */
+
+    .admin-listagem {
+        margin: 28px 0 48px;
+    }
+
+    .admin-listagem-topo {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 24px;
+    }
+
+    .admin-listagem-topo h2 {
+        margin: 0 0 8px;
+    }
+
+    .admin-listagem-topo p {
+        margin: 0;
+        color: var(--texto-secundario);
+    }
+
+    .admin-busca-label {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-width: min(100%, 300px);
+        font-weight: 600;
+    }
+
+    .admin-busca-label input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--borda);
+        border-radius: 10px;
+        background: var(--superficie);
+        color: var(--texto);
+        font: inherit;
+    }
+
+    .admin-cards-grid {
+        display: grid;
+        grid-template-columns:
+            repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+        gap: 20px;
+    }
+
+    .admin-item-card {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        min-width: 0;
+        padding: 22px;
+        background: var(--superficie);
+        border: 1px solid var(--borda);
+        border-radius: 18px;
+        box-shadow: var(--sombra);
+    }
+
+    .admin-item-card h3 {
+        margin: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-item-topo {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .admin-item-etiqueta {
+        font-size: .75rem;
+        font-weight: 700;
+        letter-spacing: .06em;
+        color: var(--texto-secundario);
+    }
+
+    .admin-item-id {
+        font-size: .8rem;
+        color: var(--texto-secundario);
+    }
+
+    .admin-item-dados {
+        display: grid;
+        gap: 8px;
+    }
+
+    .admin-item-dados p {
+        margin: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-item-acoes {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-top: auto;
+        padding-top: 8px;
+    }
+
+    .admin-item-acoes form {
+        margin: 0;
+    }
+
+    .admin-grupos {
+        display: grid;
+        gap: 28px;
+    }
+
+    .admin-grupo-tutor {
+        padding: 22px;
+        border: 1px solid var(--borda);
+        border-radius: 20px;
+        background: var(--superficie);
+        box-shadow: var(--sombra);
+    }
+
+    .admin-grupo-titulo {
+        margin: 0 0 18px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--borda);
+    }
+
+    .admin-grupo-tutor .admin-item-card {
+        box-shadow: none;
+    }
+
+    .admin-vazio {
+        padding: 22px;
+        text-align: center;
+        color: var(--texto-secundario);
+    }
+
+    .admin-item-card[hidden],
+    .admin-grupo-tutor[hidden],
+    .admin-vazio[hidden] {
+        display: none !important;
+    }
+
+    @media (max-width: 600px) {
+        .admin-item-card,
+        .admin-grupo-tutor {
+            padding: 16px;
+        }
+
+        .admin-busca-label {
+            width: 100%;
+        }
+    }
+
+
+    /* ============================================
+       PETCARGO - ADMIN: TUTORES E PETS
+       ============================================ */
+
+    /* Área principal das listagens */
+    body.painel-page .admin-listagem {
+        display: block;
+        margin: 36px 0 60px;
+    }
+
+    /* Pesquisa em destaque */
+    body.painel-page .admin-listagem-topo {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+
+        padding: 28px;
+        margin-bottom: 32px;
+
+        background: var(--superficie, #ffffff);
+        border: 1px solid var(--borda, #dce2e8);
+        border-radius: 20px;
+        box-shadow: 0 6px 24px rgba(20, 40, 60, 0.07);
+    }
+
+    body.painel-page .admin-listagem-topo h2 {
+        margin: 0 0 10px;
+        font-size: 1.5rem;
+    }
+
+    body.painel-page .admin-listagem-topo p {
+        margin: 0;
+        color: var(--texto-secundario, #64748b);
+    }
+
+    /* Campo de pesquisa */
+    body.painel-page .admin-busca-label {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        width: 100%;
+        max-width: 360px;
+
+        font-weight: 600;
+        color: var(--texto, #172b4d);
+    }
+
+    body.painel-page .admin-busca-label input {
+        display: block;
+        width: 100%;
+        min-height: 48px;
+        box-sizing: border-box;
+
+        padding: 12px 16px;
+
+        background: var(--superficie, #ffffff);
+        color: var(--texto, #172b4d);
+        border: 2px solid var(--borda, #dce2e8);
+        border-radius: 12px;
+
+        font: inherit;
+        font-weight: 400;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    body.painel-page .admin-busca-label input:focus {
+        outline: none;
+        border-color: var(--primaria, #246b4b);
+        box-shadow: 0 0 0 4px rgba(36, 107, 75, 0.12);
+    }
+
+    /* Grade de cartões */
+    body.painel-page .admin-cards-grid {
+        display: grid;
+        grid-template-columns:
+            repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+        gap: 24px;
+        align-items: stretch;
+    }
+
+    /* Cartão individual */
+    body.painel-page .admin-item-card {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        min-width: 0;
+        padding: 26px;
+
+        background: var(--superficie, #ffffff);
+        border: 1px solid var(--borda, #dce2e8);
+        border-radius: 18px;
+
+        box-shadow: 0 5px 20px rgba(20, 40, 60, 0.08);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    body.painel-page .admin-item-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(20, 40, 60, 0.12);
+    }
+
+    /* Cabeçalho dos cartões */
+    body.painel-page .admin-item-topo {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    body.painel-page .admin-item-etiqueta {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        color: var(--texto-secundario, #64748b);
+    }
+
+    body.painel-page .admin-item-id {
+        padding: 5px 10px;
+        background: rgba(36, 107, 75, 0.09);
+        border-radius: 8px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    body.painel-page .admin-item-card h3 {
+        margin: 0;
+        font-size: 1.35rem;
+        overflow-wrap: anywhere;
+    }
+
+    /* Dados dos tutores e pets */
+    body.painel-page .admin-item-dados {
+        display: grid;
+        gap: 12px;
+    }
+
+    body.painel-page .admin-item-dados p {
+        margin: 0;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+
+    /* Botões alinhados */
+    body.painel-page .admin-item-acoes {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid var(--borda, #dce2e8);
+    }
+
+    body.painel-page .admin-item-acoes form {
+        margin: 0;
+    }
+
+    /* Agrupamento dos pets por tutor */
+    body.painel-page .admin-grupos {
+        display: grid;
+        gap: 30px;
+    }
+
+    body.painel-page .admin-grupo-tutor {
+        padding: 26px;
+        background: var(--superficie, #ffffff);
+        border: 1px solid var(--borda, #dce2e8);
+        border-radius: 22px;
+        box-shadow: 0 6px 24px rgba(20, 40, 60, 0.07);
+    }
+
+    body.painel-page .admin-grupo-titulo {
+        margin: 0 0 24px;
+        padding-bottom: 16px;
+
+        font-size: 1.3rem;
+        border-bottom: 2px solid var(--borda, #dce2e8);
+    }
+
+    body.painel-page .admin-grupo-tutor .admin-item-card {
+        box-shadow: none;
+        background: var(--fundo, #f7f8fb);
+    }
+
+    /* Ocultar cartões filtrados */
+    body.painel-page .admin-item-card[hidden],
+    body.painel-page .admin-grupo-tutor[hidden],
+    body.painel-page .admin-vazio[hidden] {
+        display: none !important;
+    }
+
+    body.painel-page .admin-vazio {
+        padding: 24px;
+        text-align: center;
+        color: var(--texto-secundario, #64748b);
+    }
+
+    /* Responsividade */
+    @media (max-width: 700px) {
+        body.painel-page .admin-listagem-topo {
+            padding: 20px;
+        }
+
+        body.painel-page .admin-busca-label {
+            max-width: none;
+        }
+
+        body.painel-page .admin-item-card,
+        body.painel-page .admin-grupo-tutor {
+            padding: 18px;
+        }
+    }
+
+
+
 
 
 

@@ -1,18 +1,20 @@
 package com.petlogistica.config;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -26,16 +28,33 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
+                // Páginas e arquivos públicos
                 .requestMatchers(
                         "/",
                         "/login",
                         "/cadastro",
                         "/css/**",
-                        "/js/**",
-                        "/imagens/**"
+                        "/js/**"
                 ).permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/tutor/**").hasRole("TUTOR")
+                // APIs existentes: somente administrador
+                // APIs existentes: somente administrador
+                .requestMatchers(
+                        "/documentos",
+                        "/documentos/**",
+                        "/imagens",
+                        "/imagens/**",
+                        "/animais",
+                        "/animais/**",
+                        "/clientes",
+                        "/clientes/**"
+                ).hasRole("ADMIN")
+                // Área administrativa
+                .requestMatchers("/admin", "/admin/**")
+                .hasRole("ADMIN")
+                // Área do tutor
+                .requestMatchers("/tutor", "/tutor/**")
+                .hasRole("TUTOR")
+                // Outras rotas exigem autenticação
                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -62,12 +81,15 @@ public class SecurityConfig {
         boolean administrador = authentication.getAuthorities()
                 .stream()
                 .anyMatch(autoridade
-                        -> autoridade.getAuthority().equals("ROLE_ADMIN"));
+                        -> autoridade.getAuthority()
+                        .equals("ROLE_ADMIN"));
 
         if (administrador) {
-            response.sendRedirect("/admin");
+            response.sendRedirect(
+                    request.getContextPath() + "/admin");
         } else {
-            response.sendRedirect("/tutor");
+            response.sendRedirect(
+                    request.getContextPath() + "/tutor");
         }
     }
 }

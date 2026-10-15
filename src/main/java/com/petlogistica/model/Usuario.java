@@ -27,6 +27,9 @@ public class Usuario {
     @Column(nullable = false, length = 20)
     private String perfil = "TUTOR";
 
+    @Column(name = "nome_usuario", unique = true, length = 30)
+    private String nomeUsuario;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_cliente", unique = true)
     private Cliente cliente;
@@ -73,4 +76,13 @@ public class Usuario {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
+
 }

@@ -1,44 +1,195 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutores cadastrados | PETCARGO</title>
-    <link rel="stylesheet" th:href="@{/css/estilo.css}">
-</head>
-<body>
-    <header>
-        <h1>PETCARGO</h1>
-        <p>Gerenciamento de tutores</p>
-    </header>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Gerenciar Tutores | PETCARGO</title>
+        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+        
+    </head>
+    <body class="painel-page">
 
-    <main>
-        <h2>Tutores cadastrados</h2>
+        <header class="painel-cabecalho">
+            <div class="painel-cabecalho-conteudo">
+                <a class="painel-logo" th:href="@{/admin}">PETCARGO</a>
+                <a th:href="@{/admin}">Voltar ao painel</a>
+            </div>
+        </header>
 
-        <p th:if="${#lists.isEmpty(tutores)}">
-            Nenhum tutor cadastrado.
-        </p>
+        <main class="painel-container">
 
-        <table th:unless="${#lists.isEmpty(tutores)}">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>E-mail</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="tutor : ${tutores}">
-                    <td th:text="${tutor.idCliente}"></td>
-                    <td th:text="${tutor.nome}"></td>
-                    <td th:text="${tutor.email}"></td>
-                </tr>
-            </tbody>
-        </table>
+            <section class="painel-boas-vindas">
+                <p class="painel-etiqueta">ÁREA DO ADMINISTRADOR</p>
+                <h1>Gerenciar Tutores</h1>
+                <p>Consulte, edite e gerencie os cadastros dos tutores.</p>
+                <a class="botao" th:href="@{/admin/tutores/novo}">
+                    + Cadastrar tutor
+                </a>
+            </section>
 
-        <p>
-            <a th:href="@{/admin}">Voltar ao painel administrativo</a>
-        </p>
-    </main>
-</body>
+            <p th:if="${sucesso}" th:text="${sucesso}"
+               class="mensagem-sucesso"></p>
+
+            <p th:if="${erro}" th:text="${erro}"
+               class="mensagem-erro"></p>
+
+            <section class="admin-listagem">
+
+                <div class="admin-listagem-topo">
+                    <div>
+                        <h2>Tutores cadastrados</h2>
+                        <p>Busque por nome ou CPF, com ou sem pontuação.</p>
+                    </div>
+
+                    <label class="admin-busca-label" for="buscaTutor">
+                        <span>Pesquisar tutores</span>
+                        <input id="buscaTutor"
+                               type="search"
+                               placeholder="Nome ou CPF"
+                               autocomplete="off">
+                    </label>
+                </div>
+
+                <div id="listaTutores" class="admin-cards-grid">
+
+                    <article class="admin-item-card tutor-card"
+                             th:each="tutor : ${tutores}"
+                             th:attr="data-nome=${tutor.nome},
+                             data-cpf=${tutor.cpf}">
+
+                        <div class="admin-item-topo">
+                            <span class="admin-item-etiqueta">
+                                TUTOR CADASTRADO
+                            </span>
+
+                            <span class="admin-item-id"
+                                  th:text="|ID ${tutor.idCliente}|">
+                                ID
+                            </span>
+                        </div>
+
+                        <h3 th:text="${tutor.nome}">Nome do tutor</h3>
+
+                        <div class="admin-item-dados">
+                            <p>
+                                <strong>CPF:</strong>
+                                <span th:text="${#strings.isEmpty(tutor.cpf)
+                                      ? 'Não informado' : tutor.cpf}">
+                                    CPF
+                                </span>
+                            </p>
+
+                            <p>
+                                <strong>E-mail:</strong>
+                                <span th:text="${#strings.isEmpty(tutor.email)
+                                      ? 'Não informado' : tutor.email}">
+                                    E-mail
+                                </span>
+                            </p>
+
+                            <p>
+                                <strong>Telefone:</strong>
+                                <span th:text="${#strings.isEmpty(tutor.telefone)
+                                      ? 'Não informado' : tutor.telefone}">
+                                    Telefone
+                                </span>
+                            </p>
+                        </div>
+
+                        <div class="admin-item-acoes">
+
+                            <a class="botao botao-pequeno"
+                               th:href="@{/admin/tutores/{id}/editar(
+                               id=${tutor.idCliente})}">
+                                Editar
+                            </a>
+
+                            <a class="botao botao-pequeno"
+                               th:href="@{/admin/tutores/{id}/animais(
+                               id=${tutor.idCliente})}">
+                                Ver pets
+                            </a>
+
+                            <form method="post"
+                                  th:action="@{/admin/tutores/{id}/excluir(
+                                  id=${tutor.idCliente})}"
+                                  onsubmit="return confirm('Excluir este tutor? A exclusão pode ser bloqueada caso ele tenha pets vinculados.');">
+
+                                <button type="submit" class="acao-excluir">
+                                    Excluir
+                                </button>
+                            </form>
+
+                        </div>
+                    </article>
+
+                </div>
+
+                <p id="semTutores" class="admin-vazio" hidden>
+                    Nenhum tutor encontrado para esta pesquisa.
+                </p>
+
+                <p th:if="${#lists.isEmpty(tutores)}" class="admin-vazio">
+                    Nenhum tutor cadastrado.
+                </p>
+
+            </section>
+        </main>
+
+        <script>
+            (() => {
+                const busca = document.getElementById('buscaTutor');
+
+                const cards = [
+                    ...document.querySelectorAll(
+                            '#listaTutores .admin-item-card'
+                            )
+                ];
+
+                const vazio = document.getElementById('semTutores');
+
+                const normalizar = valor =>
+                    (valor || '')
+                            .normalize('NFD')
+                            .replace(/[\u0300-\u036f]/g, '')
+                            .toLowerCase()
+                            .trim();
+
+                const digitos = valor =>
+                    (valor || '').replace(/\D/g, '');
+
+                busca.addEventListener('input', () => {
+                    const termo = normalizar(busca.value);
+                    const cpfBusca = digitos(busca.value);
+
+                    let encontrados = 0;
+
+                    cards.forEach(card => {
+                        const nome = normalizar(card.dataset.nome);
+                        const cpf = digitos(card.dataset.cpf);
+
+                        const corresponde =
+                                !termo ||
+                                nome.includes(termo) ||
+                                (cpfBusca.length > 0 && cpf.includes(cpfBusca));
+
+                        card.hidden = !corresponde;
+
+                        if (corresponde) {
+                            encontrados++;
+                        }
+                    });
+
+                    vazio.hidden =
+                            encontrados !== 0 || cards.length === 0;
+                });
+            })();
+        </script>
+
+    </body>
 </html>
+
+
+
+

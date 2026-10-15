@@ -1,29 +1,93 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+
         <title>Área do Tutor | PETCARGO</title>
+
         <link rel="stylesheet" th:href="@{/css/estilo.css}">
+        <script th:src="@{/js/app.js}" defer></script>
     </head>
-    <body>
-        <header>
-            <h1>PETCARGO</h1>
-            <p>Área do Tutor</p>
+
+    <body class="painel-page">
+
+        <header class="painel-cabecalho">
+            <div class="painel-cabecalho-conteudo">
+                <a th:href="@{/tutor}" class="painel-logo">
+                    PETCARGO
+                </a>
+
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit"
+                            class="botao botao-secundario">
+                        Sair
+                    </button>
+                </form>
+            </div>
         </header>
 
-        <main>
-            <h2>Bem-vindo ao PETCARGO!</h2>
-            <p>Aqui você poderá consultar seus dados e gerenciar seus animais.</p>
+        <main class="painel-container">
 
-            <nav>
-                <a th:href="@{/tutor/animais}">Meus animais</a>
-                <a th:href="@{/tutor/dados}">Meus dados</a>
-            </nav>
+            <section class="painel-boas-vindas">
+                <span class="painel-etiqueta">
+                    ÁREA DO TUTOR
+                </span>
 
-            <form th:action="@{/logout}" method="post">
-                <button type="submit">Sair</button>
-            </form>
+                <h1>Bem-vindo ao PETCARGO!</h1>
+
+                <p>
+                    Consulte suas informações pessoais
+                    e gerencie os dados dos seus pets.
+                </p>
+            </section>
+
+            <section class="painel-grid">
+
+                <article class="painel-card">
+                    <div class="painel-card-icone">
+                        🐾
+                    </div>
+
+                    <h2>Meus Pets</h2>
+
+                    <p>
+                        Consulte os pets cadastrados,
+                        visualize suas informações
+                        e faça alterações nos seus dados.
+                    </p>
+
+                    <a th:href="@{/tutor/animais}"
+                       class="botao">
+                        Gerenciar pets
+                    </a>
+                </article>
+
+                <article class="painel-card">
+                    <div class="painel-card-icone">
+                        👤
+                    </div>
+
+                    <h2>Meus dados</h2>
+
+                    <p>
+                        Consulte e atualize suas
+                        informações pessoais
+                        cadastradas no PETCARGO.
+                    </p>
+
+                    <a th:href="@{/tutor/dados}"
+                       class="botao">
+                        Consultar meus dados
+                    </a>
+                </article>
+
+            </section>
+
         </main>
+
     </body>
 </html>
+

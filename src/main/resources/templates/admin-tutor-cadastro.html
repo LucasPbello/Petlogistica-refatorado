@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cadastrar tutor | PETCARGO</title>
+        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    </head>
+    <body>
+
+        <a th:href="@{/admin}">← Voltar ao painel administrativo</a>
+
+        <main class="container">
+            <h1>Cadastrar tutor</h1>
+            <p>Crie uma conta de acesso para um novo tutor.</p>
+
+            <div th:if="${erro}"
+                 class="mensagem-erro"
+                 th:text="${erro}">
+            </div>
+
+            <form th:action="@{/admin/tutores/novo}" method="post">
+
+                <div>
+                    <label for="nome">Nome completo</label>
+                    <input type="text"
+                           id="nome"
+                           name="nome"
+                           th:value="${nome}"
+                           required>
+                </div>
+
+                <div>
+                    <label for="email">E-mail</label>
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           th:value="${email}"
+                           required>
+                </div>
+
+                <div>
+                    <label for="senha">Senha inicial</label>
+                    <input type="password"
+                           id="senha"
+                           name="senha"
+                           minlength="8"
+                           autocomplete="new-password"
+                           required>
+                    <small>A senha deve ter pelo menos 8 caracteres.</small>
+                </div>
+
+                <div>
+                    <label for="confirmarSenha">Confirmar senha</label>
+                    <input type="password"
+                           id="confirmarSenha"
+                           name="confirmarSenha"
+                           minlength="8"
+                           autocomplete="new-password"
+                           required>
+                </div>
+
+                <button type="submit">Cadastrar tutor</button>
+
+                <a th:href="@{/admin/tutores}">
+                    Cancelar e voltar
+                </a>
+            </form>
+            <p>
+                <a th:href="@{/admin/tutores}">Voltar aos tutores</a>
+            </p>
+        </main>
+
+    </body>
+</html>
+

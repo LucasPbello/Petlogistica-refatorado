@@ -29,6 +29,7 @@ public class AcessoController {
     @PostMapping("/cadastro")
     public String cadastrar(
             @RequestParam String nome,
+            @RequestParam String nomeUsuario,
             @RequestParam String email,
             @RequestParam String senha,
             @RequestParam String confirmarSenha,
@@ -37,25 +38,30 @@ public class AcessoController {
         if (!senha.equals(confirmarSenha)) {
             redirectAttributes.addFlashAttribute(
                     "erro", "As senhas não são iguais.");
+
             return "redirect:/cadastro";
         }
 
         try {
-            usuarioService.cadastrarTutor(nome, email, senha);
+
+            usuarioService.cadastrarTutor(
+                    nome,
+                    nomeUsuario,
+                    email,
+                    senha);
 
             redirectAttributes.addFlashAttribute(
-                    "sucesso", "Cadastro realizado com sucesso!");
+                    "sucesso",
+                    "Cadastro realizado com sucesso!");
 
             return "redirect:/login?cadastro";
 
         } catch (IllegalArgumentException e) {
+
             redirectAttributes.addFlashAttribute(
                     "erro", e.getMessage());
+
             return "redirect:/cadastro";
         }
     }
 }
-
-
-
-

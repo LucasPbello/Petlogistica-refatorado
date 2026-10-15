@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Documentos e fotos | PETCARGO</title>
+        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    </head>
+    <body class="painel-page">
+        <header class="painel-cabecalho">
+            <div class="painel-cabecalho-conteudo">
+                <a th:href="@{/admin}" class="painel-logo">🐾 PETCARGO</a>
+                <a th:href="@{/admin/animais}" class="botao botao-secundario botao-pequeno">← Voltar aos pets</a>
+            </div>
+        </header>
+        <main class="painel-container">
+
+            <section class="painel-boas-vindas">
+
+                <p class="painel-etiqueta">
+                    ÁREA DO ADMINISTRADOR
+                </p>
+
+                <h1 th:text="|Arquivos de ${animal.nome}|">
+                    Arquivos do pet
+                </h1>
+
+                <p>
+                    Adicione e gerencie documentos e fotos deste pet.
+                </p>
+
+                <div class="animal-form-navegacao">
+
+                    <a class="botao botao-secundario"
+                       th:if="${animal.cliente != null}"
+                       th:href="@{/admin/tutores/{id}/animais(id=${animal.cliente.idCliente})}">
+                        ← Voltar aos pets deste tutor
+                    </a>
+
+                </div>
+
+            </section>
+
+            <p th:if="${sucesso}" th:text="${sucesso}" class="mensagem-sucesso"></p>
+            <p th:if="${erro}" th:text="${erro}" class="mensagem-erro"></p>
+
+            <section class="animal-form-card">
+                <h2>Documentos PDF</h2>
+                <p>Adicione carteiras de vacinação, atestados e outros documentos (até 5 MB).</p>
+                <form method="post" enctype="multipart/form-data"
+                      th:action="@{/admin/animais/{id}/arquivos/documentos/adicionar(id=${animal.idAnimal})}">
+                    <label for="nomeDocumento">Nome do documento</label>
+                    <input id="nomeDocumento" name="nomeDocumento" placeholder="Ex.: Carteira de vacinação">
+                    <label for="tipoDocumento">Tipo de documento</label>
+                    <select id="tipoDocumento" name="tipoDocumento">
+                        <option value="VACINACAO">Carteira de vacinação</option>
+                        <option value="ATESTADO">Atestado veterinário</option>
+                        <option value="OUTRO">Outro</option>
+                    </select>
+                    <label for="novoDocumento">Selecionar PDF</label>
+                    <input id="novoDocumento" type="file" name="arquivo"
+                           accept=".pdf,application/pdf" required>
+                    <button type="submit" class="botao">+ Adicionar documento</button>
+                </form>
+                <hr>
+                <h3>Documentos cadastrados</h3>
+                <p th:if="${#lists.isEmpty(documentos)}">Nenhum documento cadastrado.</p>
+                <div th:each="documento : ${documentos}" class="animal-arquivo-item">
+                    <strong th:text="${documento.nome}">Documento</strong>
+                    <p th:text="${documento.tipo}"></p>
+                    <a th:href="@{/admin/animais/{id}/arquivos/documentos/{arquivoId}/arquivo(id=${animal.idAnimal},arquivoId=${documento.idDocumento})}">Baixar PDF</a>
+                    <form method="post" enctype="multipart/form-data"
+                          th:action="@{/admin/animais/{id}/arquivos/documentos/{arquivoId}/substituir(id=${animal.idAnimal},arquivoId=${documento.idDocumento})}">
+                        <label>Substituir documento</label>
+                        <input type="file" name="arquivo" accept=".pdf,application/pdf" required>
+                        <button type="submit" class="botao botao-pequeno">Substituir PDF</button>
+                    </form>
+                    <form method="post"
+                          th:action="@{/admin/animais/{id}/arquivos/documentos/{arquivoId}/excluir(id=${animal.idAnimal},arquivoId=${documento.idDocumento})}"
+                          onsubmit="return confirm('Excluir este documento?');">
+                        <button type="submit" class="acao-excluir">Excluir documento</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="animal-form-card">
+                <h2>Fotos do pet</h2>
+                <p>Adicione imagens PNG ou JPG de até 5 MB.</p>
+                <form method="post" enctype="multipart/form-data"
+                      th:action="@{/admin/animais/{id}/arquivos/imagens/adicionar(id=${animal.idAnimal})}">
+                    <label for="nomeImagem">Nome da foto</label>
+                    <input id="nomeImagem" name="nomeImagem" placeholder="Ex.: Foto de perfil">
+                    <label for="novaImagem">Selecionar foto</label>
+                    <input id="novaImagem" type="file" name="arquivo"
+                           accept=".png,.jpg,.jpeg,image/png,image/jpeg" required>
+                    <button type="submit" class="botao">+ Adicionar foto</button>
+                </form>
+                <hr>
+                <h3>Fotos cadastradas</h3>
+                <p th:if="${#lists.isEmpty(imagens)}">Nenhuma foto cadastrada.</p>
+                <div class="animal-fotos-grid">
+                    <div th:each="imagem : ${imagens}" class="animal-arquivo-item">
+                        <strong th:text="${imagem.nome}">Foto</strong>
+                        <img class="animal-foto" alt="Foto do pet"
+                             th:src="@{/admin/animais/{id}/arquivos/imagens/{arquivoId}/arquivo(id=${animal.idAnimal},arquivoId=${imagem.idImagem})}">
+                        <a class="botao botao-pequeno"
+                           th:href="@{/admin/animais/{id}/arquivos/imagens/{arquivoId}/download(id=${animal.idAnimal},arquivoId=${imagem.idImagem})}">Baixar foto</a>
+                        <form method="post" enctype="multipart/form-data"
+                              th:action="@{/admin/animais/{id}/arquivos/imagens/{arquivoId}/substituir(id=${animal.idAnimal},arquivoId=${imagem.idImagem})}">
+                            <label>Substituir foto</label>
+                            <input type="file" name="arquivo" accept=".png,.jpg,.jpeg,image/png,image/jpeg" required>
+                            <button type="submit" class="botao botao-pequeno">Substituir foto</button>
+                        </form>
+                        <form method="post"
+                              th:action="@{/admin/animais/{id}/arquivos/imagens/{arquivoId}/excluir(id=${animal.idAnimal},arquivoId=${imagem.idImagem})}"
+                              onsubmit="return confirm('Excluir esta foto?');">
+                            <button type="submit" class="acao-excluir">Excluir foto</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+    </body>
+</html>

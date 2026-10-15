@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+
+        <title>Meus dados | PETCARGO</title>
+
+        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+        <script th:src="@{/js/app.js}" defer></script>
+    </head>
+
+    <body class="auth-page">
+
+        <main class="auth-card">
+
+            <h1>Meus dados</h1>
+
+            <p>Consulte e atualize suas informações pessoais.</p>
+
+            <p th:if="${erro}"
+               th:text="${erro}"
+               class="mensagem-erro"></p>
+
+            <p th:if="${sucesso}"
+               th:text="${sucesso}"
+               class="mensagem-sucesso"></p>
+
+
+            <form th:action="@{/tutor/dados}" method="post">
+
+                <label for="nome">Nome completo</label>
+                <input type="text"
+                       id="nome"
+                       name="nome"
+                       th:value="${nome}"
+                       required>
+
+                <label for="email">E-mail</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       th:value="${email}"
+                       required>
+
+
+                <label for="cpf">CPF</label>
+                <input type="text"
+                       id="cpf"
+                       name="cpf"
+                       th:value="${cpf}"
+                       data-mascara="cpf"
+                       maxlength="14"
+                       inputmode="numeric"
+                       autocomplete="off"
+                       placeholder="000.000.000-00">
+
+                <label for="telefone">Telefone</label>
+                <input type="tel"
+                       id="telefone"
+                       name="telefone"
+                       th:value="${telefone}"
+                       data-mascara="telefone"
+                       maxlength="15"
+                       inputmode="numeric"
+                       autocomplete="tel"
+                       placeholder="(00) 00000-0000">
+
+
+                <button type="submit" class="botao">
+                    Salvar alterações
+                </button>
+
+            </form>
+
+
+            <section class="arquivos-secao">
+
+                <h2>Meus documentos</h2>
+
+                <p>
+                    Cadastre seus documentos pessoais em PDF.
+                    O envio é opcional.
+                </p>
+
+                <form th:action="@{/tutor/documentos}"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <label for="nomeDocumento">
+                        Nome do documento
+                    </label>
+
+                    <input type="text"
+                           id="nomeDocumento"
+                           name="nome"
+                           placeholder="Ex.: RG, CNH ou comprovante"
+                           required>
+
+                    <label for="tipoDocumento">
+                        Tipo
+                    </label>
+
+                    <select id="tipoDocumento"
+                            name="tipo"
+                            required>
+
+                        <option value="">Selecione</option>
+                        <option value="RG">RG</option>
+                        <option value="CNH">CNH</option>
+                        <option value="COMPROVANTE">
+                            Comprovante
+                        </option>
+                        <option value="OUTRO">Outro</option>
+
+                    </select>
+
+                    <label for="arquivoDocumento">
+                        Arquivo PDF
+                    </label>
+
+                    <input type="file"
+                           id="arquivoDocumento"
+                           name="arquivo"
+                           accept=".pdf,application/pdf"
+                           required>
+
+                    <button type="submit" class="botao">
+                        Enviar documento
+                    </button>
+
+                </form>
+
+                <h3>Documentos cadastrados</h3>
+
+                <p th:if="${#lists.isEmpty(documentos)}">
+                    Nenhum documento cadastrado.
+                </p>
+
+                <div th:each="documento : ${documentos}"
+                     class="arquivo-item">
+
+                    <strong th:text="${documento.nome}">
+                        Documento
+                    </strong>
+
+                    <p th:text="${documento.tipo}">
+                        Tipo
+                    </p>
+
+                    <a th:href="@{/tutor/documentos/{id}/arquivo(
+                       id=${documento.idDocumento})}">
+                        Baixar PDF
+                    </a>
+
+                    <form th:action="@{/tutor/documentos/{id}/excluir(
+                          id=${documento.idDocumento})}"
+                          method="post">
+
+                        <button type="submit"
+                                class="botao-excluir"
+                                onclick="return confirm('Excluir este documento?');">
+                            Excluir
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+            <section class="arquivos-secao">
+
+                <h2>Minhas fotos</h2>
+
+                <p>
+                    Adicione suas fotos pessoais em PNG ou JPG.
+                    O envio é opcional.
+                </p>
+
+                <form th:action="@{/tutor/imagens}"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    <label for="nomeImagem">Nome da foto</label>
+                    <input type="text"
+                           id="nomeImagem"
+                           name="nome"
+                           placeholder="Ex.: Foto de perfil"
+                           required>
+
+                    <label for="tipoImagem">Tipo</label>
+                    <select id="tipoImagem"
+                            name="tipo"
+                            required>
+                        <option value="">Selecione</option>
+                        <option value="PERFIL">Foto de perfil</option>
+                        <option value="PESSOAL">Foto pessoal</option>
+                        <option value="OUTRO">Outro</option>
+                    </select>
+
+                    <label for="arquivoImagem">Selecionar imagem</label>
+                    <input type="file"
+                           id="arquivoImagem"
+                           name="arquivo"
+                           accept=".png,.jpg,.jpeg,image/png,image/jpeg"
+                           required>
+
+                    <button type="submit" class="botao">
+                        Enviar foto
+                    </button>
+                </form>
+
+                <h3>Fotos cadastradas</h3>
+
+                <p th:if="${#lists.isEmpty(imagens)}">
+                    Nenhuma foto cadastrada.
+                </p>
+
+                <div class="fotos-grid">
+
+                    <div class="foto-item"
+                         th:each="imagem : ${imagens}">
+
+                        <img th:src="@{/tutor/imagens/{id}/arquivo(
+                             id=${imagem.idImagem})}"
+                             th:alt="${imagem.nome}"
+                             loading="lazy">
+
+                        <strong th:text="${imagem.nome}">
+                            Foto
+                        </strong>
+
+                        <p th:text="${imagem.tipo}">
+                            Tipo
+                        </p>
+
+                        <form th:action="@{/tutor/imagens/{id}/excluir(
+                              id=${imagem.idImagem})}"
+                              method="post">
+
+                            <button type="submit"
+                                    class="botao-excluir"
+                                    onclick="return confirm('Excluir esta foto?');">
+                                Excluir
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+
+            <p>
+                <a th:href="@{/tutor}">Voltar ao painel</a>
+            </p>
+
+        </main>
+
+
+
+    </body>
+</html>
+

@@ -1,49 +1,93 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar conta | PETCARGO</title>
-    <link rel="stylesheet" th:href="@{/css/estilo.css}">
-    <script th:src="@{/js/app.js}" defer></script>
-</head>
-<body class="auth-page">
-    <main class="auth-card">
-        <h1>PETCARGO</h1>
-        <h2>Crie sua conta</h2>
-        <p>Cadastre-se para acessar sua área de tutor.</p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <p th:if="${erro}" class="mensagem erro"
-           th:text="${erro}"></p>
+        <title>Criar conta | PETCARGO</title>
 
-        <form th:action="@{/cadastro}" method="post">
-            <label for="nome">Nome completo</label>
-            <input type="text" id="nome" name="nome"
-                   autocomplete="name" required>
+        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+        <script th:src="@{/js/app.js}" defer></script>
+    </head>
 
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email"
-                   autocomplete="email" required>
+    <body class="auth-page">
 
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha"
-                   minlength="8" autocomplete="new-password"
-                   required>
+        <main class="auth-card">
 
-            <label for="confirmarSenha">Confirmar senha</label>
-            <input type="password" id="confirmarSenha"
-                   name="confirmarSenha" minlength="8"
-                   autocomplete="new-password" required>
+            <h1>PETCARGO</h1>
+            <h2>Crie sua conta</h2>
 
-            <button type="submit">Criar conta</button>
-        </form>
+            <p>Cadastre-se para acessar sua área de tutor.</p>
 
-        <p>
-            Já tem uma conta?
-            <a th:href="@{/login}">Entrar</a>
-        </p>
-    </main>
-</body>
+            <p th:if="${erro}"
+               class="mensagem erro"
+               th:text="${erro}">
+            </p>
+
+            <form th:action="@{/cadastro}" method="post">
+
+                <label for="nome">Nome completo</label>
+                <input type="text"
+                       id="nome"
+                       name="nome"
+                       autocomplete="name"
+                       required>
+
+                <label for="nomeUsuario">Nome de usuário</label>
+                <input type="text"
+                       id="nomeUsuario"
+                       name="nomeUsuario"
+                       minlength="4"
+                       maxlength="20"
+                       pattern="[a-zA-Z0-9._]{4,20}"
+                       title="Use de 4 a 20 caracteres: letras, números, pontos ou underline."
+                       autocomplete="username"
+                       required>
+
+                <small>
+                    Escolha um nome de usuário único, sem espaços.
+                    Você poderá utilizá-lo para entrar no PETCARGO.
+                </small>
+
+                <label for="email">E-mail</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       autocomplete="email"
+                       required>
+
+                <label for="senha">Senha</label>
+                <input type="password"
+                       id="senha"
+                       name="senha"
+                       minlength="8"
+                       autocomplete="new-password"
+                       required>
+
+                <label for="confirmarSenha">Confirmar senha</label>
+                <input type="password"
+                       id="confirmarSenha"
+                       name="confirmarSenha"
+                       minlength="8"
+                       autocomplete="new-password"
+                       required>
+
+                <button type="submit" class="botao">
+                    Criar conta
+                </button>
+
+            </form>
+
+            <p>
+                Já tem uma conta?
+                <a th:href="@{/login}">Entrar</a>
+            </p>
+
+        </main>
+
+    </body>
 </html>
+
 
 

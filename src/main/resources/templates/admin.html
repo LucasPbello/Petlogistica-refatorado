@@ -1,29 +1,110 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Área Administrativa | PETCARGO</title>
-        <link rel="stylesheet" th:href="@{/css/estilo.css}">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+
+        <title>Painel Administrativo | PETCARGO</title>
+
+        <link rel="stylesheet"
+              th:href="@{/css/estilo.css}">
     </head>
-    <body>
-        <header>
-            <h1>PETCARGO</h1>
-            <p>Área Administrativa</p>
+
+    <body class="painel-page">
+
+        <header class="painel-cabecalho">
+            <div class="painel-cabecalho-conteudo">
+
+                <a th:href="@{/admin}" class="painel-logo">
+                    🐾 PETCARGO
+                </a>
+
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit"
+                            class="botao botao-secundario botao-pequeno">
+                        Sair
+                    </button>
+                </form>
+
+            </div>
         </header>
 
-        <main>
-            <h2>Painel do Administrador</h2>
-            <p>Gerencie os cadastros e consulte as informações do sistema.</p>
+        <main class="painel-container">
 
-            <nav>
-                <a th:href="@{/admin/tutores}">Gerenciar tutores</a>
-                <a th:href="@{/admin/animais}">Gerenciar animais</a>
-            </nav>
+            <section class="painel-boas-vindas">
 
-            <form th:action="@{/logout}" method="post">
-                <button type="submit">Sair</button>
-            </form>
+                <span class="painel-etiqueta">
+                    ÁREA ADMINISTRATIVA
+                </span>
+
+                <h1>Painel do Administrador</h1>
+
+                <p>
+                    Gerencie os tutores, pets e informações
+                    cadastradas no PETCARGO.
+                </p>
+
+            </section>
+
+            <section class="painel-grid">
+
+                <!-- GERENCIAR TUTORES -->
+
+                <article class="painel-card">
+
+                    <div class="painel-card-icone">
+                        👥
+                    </div>
+
+                    <h2>Gerenciar Tutores</h2>
+
+                    <p>
+                        Consulte os tutores cadastrados,
+                        edite suas informações, visualize
+                        seus pets e gerencie os cadastros.
+                    </p>
+
+                    <a th:href="@{/admin/tutores}"
+                       class="botao">
+                        Acessar Tutores →
+                    </a>
+
+                </article>
+
+                <!-- GERENCIAR PETS -->
+
+                <article class="painel-card">
+
+                    <div class="painel-card-icone">
+                        🐾
+                    </div>
+
+                    <h2>Gerenciar Pets</h2>
+
+                    <p>
+                        Consulte todos os pets cadastrados,
+                        atualize seus dados e gerencie
+                        seus registros no sistema.
+                    </p>
+
+                    <a th:href="@{/admin/animais}"
+                       class="botao">
+                        Acessar Pets →
+                    </a>
+
+                </article>
+
+            </section>
+
+            <footer class="admin-rodape">
+                <p>
+                    PETCARGO — Painel de Administração
+                </p>
+            </footer>
+
         </main>
+
     </body>
 </html>

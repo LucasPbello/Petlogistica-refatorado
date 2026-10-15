@@ -1,59 +1,138 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Meus animais | PETCARGO</title>
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+
+        <title>Meus Pets | PETCARGO</title>
         <link rel="stylesheet" th:href="@{/css/estilo.css}">
     </head>
-    <body>
-        <header>
-            <h1>PETCARGO</h1>
-            <p>Meus animais</p>
+
+    <body class="painel-page">
+
+        <header class="painel-cabecalho">
+            <div class="painel-cabecalho-conteudo">
+                <a th:href="@{/tutor}" class="painel-logo">
+                    PETCARGO
+                </a>
+            </div>
         </header>
 
-        <main>
-            <h2>Meus animais</h2>
+        <main class="painel-container">
 
-            <p th:if="${sucesso}" th:text="${sucesso}"></p>
-            <p th:if="${erro}" th:text="${erro}"></p>
+            <section class="painel-boas-vindas">
+                <p class="painel-etiqueta">ÁREA DO TUTOR</p>
+                <h1>Meus pets</h1>
+                <p>Gerencie seus pets, documentos e fotos.</p>
+            </section>
 
-            <p th:if="${#lists.isEmpty(animais)}">
-                Você ainda não cadastrou nenhum animal.
-            </p>
-
-            <table th:unless="${#lists.isEmpty(animais)}">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Espécie</th>
-                        <th>Raça</th>
-                        <th>Sexo</th>
-                        <th>Peso (kg)</th>
-                        <th>Data de nascimento</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="animal : ${animais}">
-                        <td th:text="${animal.nome}"></td>
-                        <td th:text="${animal.especie}"></td>
-                        <td th:text="${animal.raca}"></td>
-                        <td th:text="${animal.sexo}"></td>
-                        <td th:text="${animal.peso}"></td>
-                        <td th:text="${animal.dataNascimento}"></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p>
-                <a th:href="@{/tutor/animais/novo}">
-                    Cadastrar animal
+            <div class="animais-acoes">
+                <a th:href="@{/tutor/animais/novo}"
+                   class="botao">
+                    + Cadastrar pet
                 </a>
-            </p>
 
-            <p>
-                <a th:href="@{/tutor}">Voltar à área do tutor</a>
-            </p>
+                <a th:href="@{/tutor}">
+                    Voltar ao painel
+                </a>
+            </div>
+
+            <p th:if="${sucesso}"
+               th:text="${sucesso}"
+               class="mensagem-sucesso"></p>
+
+            <p th:if="${erro}"
+               th:text="${erro}"
+               class="mensagem-erro"></p>
+
+            <section class="animais-listagem">
+
+                <h2>Pets cadastrados</h2>
+
+                <p th:if="${#lists.isEmpty(animais)}">
+                    Você ainda não cadastrou nenhum pet.
+                </p>
+
+                <div class="animais-grid"
+                     th:unless="${#lists.isEmpty(animais)}">
+
+                    <article class="animal-card"
+                             th:each="animal : ${animais}">
+
+                        <div class="animal-card-topo">
+                            <div>
+                                <span class="animal-card-etiqueta">
+                                    PET CADASTRADO
+                                </span>
+
+                                <h3 th:text="${animal.nome}">
+                                    Nome do pet
+                                </h3>
+
+                                <p th:text="|${animal.especie} • ${animal.raca}|">
+                                    Espécie e raça
+                                </p>
+                            </div>
+
+                            <span class="animal-card-icone">🐾</span>
+                        </div>
+
+                        <div class="animal-card-dados">
+                            <p>
+                                <strong>Sexo:</strong>
+                                <span th:text="${animal.sexo}"></span>
+                            </p>
+
+                            <p>
+                                <strong>Cor:</strong>
+                                <span th:text="${animal.cor}"></span>
+                            </p>
+
+                            <p>
+                                <strong>Peso:</strong>
+                                <span th:text="|${animal.peso} kg|"></span>
+                            </p>
+
+                            <p>
+                                <strong>Nascimento:</strong>
+                                <span th:text="${animal.dataNascimento}"></span>
+                            </p>
+                        </div>
+
+                        <div class="animal-card-acoes">
+
+                            <a class="acao-editar"
+                               th:href="@{/tutor/animais/{id}/editar(
+                               id=${animal.idAnimal})}">
+                                Editar
+                            </a>
+
+                            <a class="acao-arquivos"
+                               th:href="@{/tutor/animais/{id}/arquivos(
+                               id=${animal.idAnimal})}">
+                                Documentos e fotos
+                            </a>
+
+                            <form method="post"
+                                  th:action="@{/tutor/animais/{id}/excluir(
+                                  id=${animal.idAnimal})}">
+
+                                <button type="submit"
+                                        class="acao-excluir"
+                                        onclick="return confirm('Excluir este pet e todos os seus arquivos?');">
+                                    Excluir
+                                </button>
+                            </form>
+
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
         </main>
     </body>
 </html>
+
