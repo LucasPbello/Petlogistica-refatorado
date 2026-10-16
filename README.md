@@ -1,358 +1,316 @@
-# 💻 PetLogistica-refatorado
+# 🐾 PETCARGO --- PetLogística Web
 
-Projeto desenvolvido para o curso Técnico em Desenvolvimento de Sistemas do SENAC EAD.
+**Projeto Integrador --- Técnico em Desenvolvimento de Sistemas \| SENAC
+EAD**
 
-## 🏦 Título do projeto
+O **PETCARGO** é um sistema web para gerenciamento de tutores, animais,
+documentos e imagens. Foi desenvolvido com Java e Spring Boot, a partir
+da refatoração do projeto PetLogística original, construído em Java
+Swing.
 
-🧱 PetLogística
+## 📘 Evolução e objetivos
 
+O projeto começou como aplicação desktop Java Swing. A refatoração
+buscou aplicar separação de responsabilidades, principalmente o
+princípio **SRP (Single Responsibility Principle)**, substituir DAOs por
+Spring Data JPA e organizar as classes em camadas.
 
-## 📘 Desenvolvimento
+A evolução incluiu uma API REST, testada com Postman, e posteriormente
+uma aplicação web com páginas Thymeleaf, autenticação e controle de
+acesso.
 
-Este projeto representa uma nova versão refatorada do sistema PetLogística, desenvolvido anteriormente utilizando Java Swing.
+### Objetivos alcançados
 
-A proposta desta etapa é analisar o projeto anterior e reorganizar suas funcionalidades, aplicando princípios de programação orientada a objetos, SOLID e separação de responsabilidades.
+-   Separar as responsabilidades entre Controller, Service, Repository e
+    Model.
+-   Utilizar MySQL para persistência dos dados.
+-   Implementar operações de cadastro, consulta, alteração e exclusão.
+-   Permitir upload e recuperação de documentos e imagens.
+-   Criar interfaces web para tutor e administrador.
+-   Proteger os dados por autenticação e autorização.
+-   Registrar testes, bugs e histórico de alterações no GitHub.
 
+## 🛠️ Tecnologias utilizadas
 
-### Objetivos
-
-✅ Refatorar partes do projeto integrador anterior;
-
-✅ Separar as responsabilidades das classes;
-
-✅ Aplicar principalmente o princípio SRP (Single Responsibility Principle);
-
-✅ Criar uma arquitetura em camadas utilizando Controller, Service e Repository;
-
-✅ Substituir os antigos DAOs por Spring Data JPA;
-
-✅ Utilizar MySQL para persistência dos dados;
-
-✅ Criar uma API REST para as funcionalidades do sistema;
-
-✅ Criar DTOs para separar os dados recebidos pela API das entidades;
-
-✅ Implementar tratamento de exceções;
-
-✅ Implementar cadastro, consulta, atualização e exclusão de clientes;
-
-✅ Implementar cadastro, consulta, atualização e exclusão de animais;
-
-✅ Implementar gerenciamento de endereços dos clientes;
-
-✅ Permitir clientes sem endereço;
-
-✅ Permitir múltiplos endereços para um mesmo cliente;
-
-✅ Implementar gerenciamento de documentos relacionados aos animais;
-
-✅ Implementar gerenciamento de imagens relacionadas aos animais;
-
-✅ Implementar upload e download de arquivos;
-
-✅ Realizar testes utilizando o Postman;
-
-✅ Criar testes por meio de uma classe com método `main()`;
-
-✅ Utilizar Git e GitHub para versionamento do projeto.
-
-🚧 Projeto em desenvolvimento.
-
+  Tecnologia                    Utilização
+  ----------------------------- ----------------------------------
+  Java 26                       Linguagem principal
+  Spring Boot 4.1.1             Framework da aplicação
+  Spring MVC / Spring Web       Requisições e rotas
+  Spring Security               Autenticação e autorização
+  Spring Data JPA e Hibernate   Persistência
+  MySQL 8                       Banco de dados
+  Thymeleaf                     Templates HTML
+  HTML5, CSS3 e JavaScript      Interface web
+  Maven / Maven Wrapper         Build e dependências
+  JUnit                         Testes unitários
+  Postman                       Testes de API REST
+  NetBeans                      IDE
+  Git e GitHub                  Versionamento e registro de bugs
 
 ## 🏗️ Arquitetura
 
-A aplicação foi organizada utilizando uma arquitetura em camadas:
-```text
-Controller
-     ↓
-Service
-     ↓
-Repository
-     ↓
-MySQL
+A aplicação utiliza uma organização em camadas:
+
+``` text
+Navegador (HTML / CSS / JavaScript)
+              |
+           Thymeleaf
+              |
+          Controller
+              |
+            Service
+              |
+          Repository
+              |
+             MySQL
 ```
 
-## 📂 Estrutura do projeto
+-   **Model:** entidades e relacionamentos.
+-   **Controller:** rotas HTTP e respostas ou páginas.
+-   **Service:** regras de negócio, validações e operações.
+-   **Repository:** acesso ao banco de dados com Spring Data JPA.
+-   **DTO:** transporte de dados específicos.
+-   **Exception:** tratamento de erros e recursos inexistentes.
+-   **Security:** regras de login e acesso por perfil.
+-   **Templates:** páginas HTML renderizadas com Thymeleaf.
+-   **Static:** arquivos CSS, JavaScript e recursos públicos.
 
-**Model**
+### Princípio SOLID --- SRP
 
-Representa os dados e entidades do sistema:
+As responsabilidades que anteriormente estavam concentradas nas telas
+Swing foram distribuídas entre as camadas. Controllers recebem
+requisições; Services tratam regras de negócio; Repositories cuidam da
+persistência. O projeto também utiliza injeção de dependências e
+interfaces.
 
-- Cliente
-- Endereco
-- Animal
-- Documento
-- Imagem
+## 🐾 Funcionalidades da versão web
 
-**Controller**
+### 👤 Tutor
 
-Recebe as requisições da API e retorna as respostas para o usuário.
+-   Criar conta com nome, e-mail e senha.
+-   Fazer login e logout.
+-   Consultar e atualizar seus dados pessoais.
+-   Informar CPF e telefone posteriormente, com validação.
+-   Cadastrar, consultar, editar e excluir seus próprios animais.
+-   Gerenciar documentos PDF e imagens vinculados aos animais.
+-   Enviar, visualizar, substituir e excluir arquivos.
+-   Utilizar a interface com tema claro ou escuro.
 
-**Service**
+### 🛡️ Administrador
 
-Responsável pelas regras de negócio e pelas operações realizadas no sistema.
-
-**Repository**
-
-Responsável pelo acesso ao banco de dados utilizando Spring Data JPA.
-
-**DTO**
-
-Utilizado para transportar informações específicas entre a API e o sistema.
-
-**Exception**
-
-Responsável pelo tratamento de erros, como quando um cliente ou animal não é encontrado.
-
-**Test**
-
-Contém a classe TestePetLogistica, responsável por executar testes através do método main().
-
-
-## 🐾 Funcionalidades implementadas
-
-### 👤 Cliente
-
-✅ Cadastro;
-
-✅ Consulta;
-
-✅ Atualização;
-
-✅ Exclusão;
-
-✅ Tratamento de cliente não encontrado;
-
-✅ Associação com múltiplos endereços;
-
-✅ Cadastro de cliente sem endereço;
-
-✅ Adição de endereço posteriormente;
-
-✅ Exclusão de um endereço específico.
-
-
-### 🏠 Endereço
-
-✅ Cadastro de endereços vinculados aos clientes;
-
-✅ Consulta de endereços;
-
-✅ Atualização de endereços;
-
-✅ Exclusão de endereços;
-
-✅ Permite que um cliente possua múltiplos endereços;
-
-✅ Permite cadastrar o cliente sem endereço e adicioná-lo posteriormente.
-
+-   Acessar painel administrativo próprio.
+-   Listar e gerenciar tutores.
+-   Editar e excluir registros de tutores conforme as regras do sistema.
+-   Consultar animais vinculados a cada tutor.
+-   Gerenciar informações e arquivos de animais nas telas
+    administrativas.
 
 ### 🐶 Animal
 
-✅ Cadastro;
-
-✅ Consulta;
-
-✅ Atualização;
-
-✅ Exclusão;
-
-✅ Associação com cliente;
-
-✅ Tratamento de animal não encontrado.
-
+O cadastro inclui nome, espécie, raça, sexo, cor, peso, tamanho e data
+de nascimento, com vínculo ao cliente/tutor responsável.
 
 ### 📄 Documento
 
-✅ Cadastro;
-
-✅ Consulta;
-
-✅ Atualização;
-
-✅ Exclusão;
-
-✅ Upload de arquivos PDF;
-
-✅ Download dos arquivos.
-
+-   Associação de PDFs aos animais.
+-   Upload, consulta, download, substituição e exclusão.
+-   Validação de formato e tamanho de arquivo.
 
 ### 🖼️ Imagem
 
-✅ Cadastro;
+-   Associação de imagens aos animais.
+-   Upload, visualização, download, substituição e exclusão.
+-   Validação de formatos PNG e JPG.
 
-✅ Consulta;
+## 🔨 Funcionalidades e refatorações anteriores
 
-✅ Atualização;
+Na etapa da API REST, foram implementadas e testadas operações de:
 
-✅ Exclusão;
+-   Cadastro, consulta, atualização e exclusão de clientes.
+-   Cadastro, consulta, atualização e exclusão de animais.
+-   Associação entre clientes e animais.
+-   Gerenciamento de endereços vinculados aos clientes.
+-   Cadastro de clientes sem endereço.
+-   Associação posterior de endereços e suporte a múltiplos endereços.
+-   Cadastro, consulta, atualização e exclusão de documentos e imagens.
+-   Upload e download de arquivos.
+-   Tratamento de recursos não encontrados.
 
-✅ Upload de imagens;
+Essas operações documentam a evolução do projeto; **nem todas possuem
+necessariamente uma tela específica na versão web atual**.
 
-✅ Validação de arquivos PNG e JPG;
+### Refatorações realizadas
 
-✅ Identificação automática do tipo de imagem;
+-   Separação das responsabilidades antes concentradas nas telas Swing.
+-   Substituição de DAOs por Spring Data JPA.
+-   Criação de Controller, Service e Repository.
+-   Criação de DTOs e tratamento de exceções.
+-   Separação dos arquivos de documentos e imagens da entidade Animal.
+-   Validação dos formatos de imagens.
+-   Criação de endpoints específicos de arquivos.
+-   Organização de operações de endereço.
+-   Uso de transações em operações que exigem consistência.
+-   Inclusão de autenticação e autorização na versão web.
 
-✅ Visualização e download das imagens.
+## 🔒 Segurança
 
+A aplicação utiliza **Spring Security**, com senhas codificadas por
+**BCrypt**.
 
-## 🧠 SOLID
+  Perfil    Acesso
+  --------- -----------------------------------------------------
+  `TUTOR`   Seus próprios dados, animais e arquivos autorizados
+  `ADMIN`   Funcionalidades administrativas
 
-O projeto aplica principalmente o princípio:
+A verificação de propriedade dos animais também é realizada na camada de
+serviço. Nos testes manuais, tentativas de acessar páginas de edição e
+arquivos de animais pertencentes a outro tutor retornaram **HTTP 403 ---
+Forbidden**.
 
-### SRP - Single Responsibility Principle
+**Observação:** testes de download direto de documentos e imagens
+pertencentes a outros tutores não foram executados nessa rodada e não
+são apresentados como aprovados.
 
-As responsabilidades foram separadas entre diferentes camadas da aplicação.
+## 📂 Estrutura do projeto
 
-Os Controllers são responsáveis pelas requisições HTTP, os Services pelas regras e operações da aplicação e os Repositories pela persistência dos dados.
+Estrutura simplificada de referência:
 
-Também foram utilizados conceitos relacionados a outros princípios
-SOLID, como injeção de dependências e utilização de interfaces.
+``` text
+PETCARGO/
+├── pom.xml
+├── mvnw
+├── mvnw.cmd
+├── README.md
+├── PLANO_DE_TESTES.md
+├── evidencias/
+└── src/
+    ├── main/
+    │   ├── java/com/petlogistica/
+    │   │   ├── controller/
+    │   │   ├── service/
+    │   │   ├── repository/
+    │   │   ├── model/
+    │   │   └── ... (DTO, exceções e segurança)
+    │   └── resources/
+    │       ├── templates/
+    │       ├── static/
+    │       │   ├── css/
+    │       │   └── js/
+    │       └── application.properties
+    └── test/java/
+```
 
-
-## 🔨 Refatorações realizadas
-
-🔹 Separação das responsabilidades anteriormente concentradas nas telas Swing;
-
-🔹 Substituição dos antigos DAOs por Spring Data JPA;
-
-🔹 Criação da camada Service;
-
-🔹 Criação da camada Controller;
-
-🔹 Criação de DTOs;
-
-🔹 Separação de documentos e imagens da entidade Animal;
-
-🔹 Criação de tratamento global de exceções;
-
-🔹 Criação da exceção RecursoNaoEncontradoException;
-
-🔹 Extração de responsabilidades relacionadas ao acesso ao banco;
-
-🔹 Utilização de Integer para IDs gerados pelo banco;
-
-🔹 Validação dos formatos de imagens;
-
-🔹 Criação de endpoints específicos para arquivos;
-
-🔹 Melhoria das respostas da API para recursos não encontrados;
-
-🔹 Retorno de mensagens de sucesso nas operações de exclusão;
-
-🔹 Separação do gerenciamento de endereços da atualização básica do cliente;
-
-🔹 Permissão para clientes sem endereço;
-
-🔹 Permissão para múltiplos endereços por cliente;
-
-🔹 Criação de operação específica para adicionar endereço posteriormente;
-
-🔹 Criação de operação específica para excluir um endereço;
-
-🔹 Uso de @Transactional na operação de associação de endereço ao cliente;
-
-🔹 Remoção do cadastro independente de endereço como fluxo principal da aplicação.
-
-
-## 🧪 Testes
-
-Os endpoints da API foram testados utilizando o Postman.
-
-Também foi criada a classe TestePetLogistica, que realiza testes utilizando o método main().
-
-Foram testadas operações de:
-
-✅ CRUD de clientes;
-
-✅ CRUD de animais;
-
-✅ Gerenciamento de endereços;
-
-✅ Associação entre cliente e endereço;
-
-✅ Associação entre cliente e animal;
-
-✅ Tratamento de recursos inexistentes;
-
-✅ Upload de documentos;
-
-✅ Download de documentos;
-
-✅ Upload de imagens;
-
-✅ Download de imagens;
-
-✅ Validação de formatos de imagem.
-
+A organização exata dos pacotes pode variar conforme o código. Entre as
+entidades estão **Usuario, Cliente, Endereco, Animal, Documento e
+Imagem**.
 
 ## 🗃️ Banco de dados
 
-O projeto utiliza:
+O PETCARGO utiliza **MySQL 8**, com persistência via **Spring Data JPA e
+Hibernate**.
 
-🪛 MySQL
+Os relacionamentos associam usuários a clientes/tutores, animais aos
+responsáveis e documentos e imagens aos animais.
 
-A persistência dos dados é realizada utilizando:
+As credenciais de conexão são específicas de cada ambiente e **não devem
+ser publicadas no repositório**.
 
-🪛 Spring Data JPA
+## ▶️ Como executar
 
-🪛 Hibernate
+### Pré-requisitos
 
+-   JDK 26.
+-   MySQL 8 em execução.
+-   NetBeans ou IDE compatível.
+-   Maven ou Maven Wrapper.
 
-## ⚒️ Tecnologias utilizadas
+### Passos
 
-🪛 Java 26;
+1.  Clonar o repositório ou abrir a cópia local.
+2.  Configurar o banco MySQL utilizado pela aplicação.
+3.  Ajustar localmente as propriedades de conexão do
+    `application.properties`, sem publicar credenciais.
+4.  Abrir o projeto Maven no NetBeans.
+5.  Executar a aplicação Spring Boot pela IDE ou pelo Maven Wrapper.
+6.  Acessar `http://localhost:8080` no navegador.
 
-🪛 Spring Boot 4.1.1;
+Exemplo de execução no Windows, a partir da pasta do projeto:
 
-🪛 Spring Web;
+``` bash
+.\mvnw.cmd spring-boot:run
+```
 
-🪛 Spring Data JPA;
+No Git Bash:
 
-🪛 MySQL;
+``` bash
+./mvnw spring-boot:run
+```
 
-🪛 Maven;
+A execução depende da configuração local do banco de dados. Não há
+credenciais padrão documentadas neste README.
 
-🪛 NetBeans;
+## 🧪 Testes
 
-🪛 Postman;
+### Testes unitários --- JUnit
 
-🪛 Git;
+-   **TU01:** salvar animal com cliente existente.
+-   **TU02:** tentar salvar animal com cliente inexistente.
 
-🪛 GitHub.
+Os testes foram executados com sucesso no NetBeans/Maven durante a
+validação da versão web.
 
+### Testes manuais
 
-## 📦 Dependências utilizadas
+Foram realizados testes de autenticação, navegação, gerenciamento de
+animais, arquivos e permissões entre tutores.
 
-🪛 Spring Web;
+A versão web também foi validada com cenários de acesso indevido a
+páginas de outros tutores, retornando HTTP 403.
 
-🪛 Spring Data JPA;
+O planejamento, os resultados e os casos não executados são documentados
+em [`PLANO_DE_TESTES.md`](PLANO_DE_TESTES.md). As capturas de tela ficam
+na pasta `evidencias/`.
 
-🪛 MySQL Driver.
+### Testes anteriores da API REST
 
+Na etapa de refatoração, o **Postman** foi utilizado para testar
+operações de clientes, animais, endereços, documentos, imagens, upload,
+download e tratamento de erros.
 
-## 🔄 Projeto original
+## 🐛 Registro de bugs --- GitHub Issues
 
-Este projeto foi desenvolvido a partir da análise e refatoração de partes do projeto PetLogística original.
+Durante o desenvolvimento, foram documentados problemas reais e suas
+correções:
 
-O projeto original foi desenvolvido utilizando Java Swing e possuía responsabilidades concentradas em classes de interface, acesso ao banco de dados e regras de negócio.
+1.  **Erro SQL:** coluna `caixa_transporte` permaneceu no banco após
+    remoção do atributo da entidade Animal.
+2.  **Página Gerenciar Animais:** erro causado pela ausência do template
+    na implementação inicial.
+3.  **CSS:** chave de fechamento ausente em um bloco `@media`,
+    prejudicando a estilização.
 
-A nova versão busca separar essas responsabilidades e preparar o sistema para uma arquitetura web mais organizada, reutilizável e de fácil manutenção.
+As Issues encerradas e suas correções foram registradas como evidências
+do Projeto Integrador.
 
+## 🔄 Versionamento
 
-## 🚧 Próximas etapas
+O projeto utiliza Git e GitHub. O histórico de commits documenta as
+refatorações, implementação web, testes e correções.
 
-O projeto continua em desenvolvimento.
+O repositório utilizado é **`Petlogistica-refatorado`**, preservando o
+histórico das etapas anteriores.
 
-Algumas funcionalidades existentes no projeto original ainda poderão ser migradas e refatoradas em etapas futuras, como:
+## 📌 Status e escopo
 
-⏳ Vacinas;
+**Versão web implementada e preparada para entrega acadêmica**, com
+documentação, testes e evidências.
 
-⏳ Outras funcionalidades do sistema original.
+Algumas funcionalidades da aplicação desktop original, como o módulo de
+**vacinas**, não foram incluídas no escopo atual da versão web.
 
+## 👨‍💻 Desenvolvedor
 
-## 🧗‍♂️ Desenvolvedor
-
-📍 Lucas Bello
-
-🎓 Projeto acadêmico - SENAC EAD
+**Lucas Bello**\
+Projeto acadêmico --- **SENAC EAD**\
+Curso Técnico em Desenvolvimento de Sistemas
